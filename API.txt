@@ -1,0 +1,53 @@
+PATH LIST :
+
+----------------------------------------------------------------
+
+	<domain>/
+	Description: Send {index} to user
+	Return: NONE
+
+----------------------------------------------------------------
+
+	<domain>/api/v1/todolist
+	Description: GET all value in todolist table from database
+	Return: Array<Object>
+
+----------------------------------------------------------------
+
+	<domain>/api/v1/todolist/add
+	Description: Create new todo in todolist
+	NEED: JSON in request body from following format:
+		POST {
+			name: <String>
+			description: <String>
+			state: <int>
+			expire_datetime: <String format>
+			start_datetime: <String format>
+			checklist: { checklist_ID: <Array of ID> }
+		}
+	Return: created <Object>
+
+----------------------------------------------------------------
+
+	<domain>/api/v1/todolist/update/<id>
+	Description: Update data from database by JSON in body
+	NEED: JSON in request body from following format:
+		PATCH {
+		    <Key> : <Value>
+		}
+	Return: AffectRow as <Integer>
+
+----------------------------------------------------------------
+	
+	<domain>/api/v1/todolist/delete/<id>
+    	Description: Delete record from database by ID
+    	NEED: JSON in request body from following format:
+    		PATCH {
+    		    <Key> : <Value>
+    		}
+    	Return: deleted <Object>
+
+----------------------------------------------------------------
+
+*** README ***
+< > = Value
