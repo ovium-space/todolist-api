@@ -25,7 +25,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DATE
         },
         start_datetime: {
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            allowNull: false
         },
         checklist:{
             type: DataTypes.JSON

@@ -20,6 +20,8 @@ router.post("/todolist/add", async(req, res)=>{
         expire_datetime: req.body.expire_datetime,
         start_datetime: req.body.start_datetime,
         checklist: req.body.checklist
+    }).catch((err)=>{
+        if(err) res.send(err)
     })
     res.send(data)
 })

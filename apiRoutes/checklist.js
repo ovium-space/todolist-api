@@ -20,6 +20,8 @@ Checklist.post("/checklist/add", async (req, res)=>{
         expire_datetime: req.body.expire_datetime,
         due_datetime: req.body.due_datetime,
         checklist_check: req.body.checklist_check
+    }).catch((err)=>{
+        if(err) res.send(err)
     })
     res.send(data)
 })

@@ -5,6 +5,7 @@ const api = express()
 //Rounters
 const todoAPI = require("./apiRoutes/todolist")
 const checklistAPI = require("./apiRoutes/checklist")
+const userAPI = require("./apiRoutes/user")
 
 //Database
 const db = require('./models')
@@ -14,6 +15,7 @@ const port = process.env.PORT || 3000
 api.use(express.json())
 api.use("/api/v1/", todoAPI)
 api.use("/api/v1/", checklistAPI)
+api.use("/api/v1/", userAPI)
 
 api.get("/", (req, res)=>{
     console.log("INDEX")
