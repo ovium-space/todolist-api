@@ -7,7 +7,7 @@ router.use(express.json())
 const { todolist } = require("../models")
 
 router.get("/todolist", async (req, res)=>{
-    let data = await todolist.findAll()
+    let data = await todolist.findAll().catch((err)=>res.send(err))
     res.send(data)
 })
 
