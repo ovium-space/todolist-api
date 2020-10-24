@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const Todolist = sequelize.define('todolist', {
         todolist_ID: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             primaryKey: true,
             autoIncrement: true
         },
@@ -30,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
         },
         checklist:{
             type: DataTypes.JSON
+        },
+        user_ID:{
+            type: Datatype.STRING,
+            allowNull: false
         }
     }, { freezeTableName:true, timestamps: false})
     return Todolist

@@ -16,11 +16,8 @@ User.post("/user/add", async (req, res)=>{
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
-        auth: {
-            username: req.body.auth.username,
-            password: req.body.auth.password
-        },
-        todolist_ID : { todolist: req.body.todolistID }
+        username: req.body.username,
+        password: req.body.password
     }).catch((err)=>{
         if(err) res.send(err)
     })

@@ -24,6 +24,7 @@ PATH LIST :
 			expire_datetime: <String format>
 			start_datetime: <String format>
 			checklist: { checklist_ID: <Array of ID> }
+			user_ID: <String>
 		}
 	Return: created <Object>
 

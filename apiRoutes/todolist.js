@@ -19,7 +19,8 @@ router.post("/todolist/add", async(req, res)=>{
         todolist_index: await todolist.count(),
         expire_datetime: req.body.expire_datetime,
         start_datetime: req.body.start_datetime,
-        checklist: req.body.checklist
+        checklist: req.body.checklist,
+        user_ID: req.body.user_ID
     }).catch((err)=>{
         if(err) res.send(err)
     })

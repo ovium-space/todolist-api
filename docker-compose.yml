@@ -4,7 +4,8 @@ services:
     app:
         depends_on: 
             - db
-        build: 
+        restart: always
+        build:
             context: .
         ports: 
             - 3000:3000

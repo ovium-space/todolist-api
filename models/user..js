@@ -16,14 +16,14 @@ module.exports = (sequelize, Datatype) => {
         email:{
             type: Datatype.STRING,
             allowNull: false
-        },
-        auth:{
-            type: Datatype.JSON,
+        },username:{
+            type: Datatype.STRING,
             allowNull: false
-        },
-        todolist_ID:{
-            type: Datatype.JSON
+        },password:{
+            type: Datatype.STRING,
+            allowNull: false
         }
+
     }, { freezeTableName:true, timestamps:false})
     return model
 }

@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes)=>{
     const model = sequelize.define("checklist", {
         checklist_ID:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             primaryKey: true,
             allowNull: false,
             autoIncrement: true
