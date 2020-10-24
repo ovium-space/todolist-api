@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.JSON
         },
         user_ID:{
-            type: Datatype.STRING,
+            type: Datatypes.STRING,
             allowNull: false
         }
     }, { freezeTableName:true, timestamps: false})
