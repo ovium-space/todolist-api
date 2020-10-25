@@ -3,7 +3,7 @@
     "username": "root",
     "password": "12345678",
     "database": "ex",
-    "host": "172.22.0.2",
+    "host": "ovium.space",
     "dialect": "mysql"
   },
   "test": {
