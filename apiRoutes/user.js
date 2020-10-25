@@ -5,7 +5,7 @@ const { user } = require('../models')
 User.use(express.json())
 
 User.get("/user", async (req, res)=>{
-    let data = await user.findAll()
+    let data = await user.findAll().catch((err)=>res.send(err))
     res.send(data)
 })
 
@@ -26,7 +26,7 @@ User.post("/user/add", async (req, res)=>{
 
 User.patch("/user/update/:id", async (req, res)=>{
     let userID = req.params.id
-    let data = await user.update(req.body, {where:{ user_ID: userID }})
+    let data = await user.update(req.body, {where:{ user_ID: userID }}).catch((err)=>res.send(err))
     res.send(data)
 })
 

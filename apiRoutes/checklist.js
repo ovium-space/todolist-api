@@ -5,7 +5,7 @@ const { checklist } = require('../models')
 Checklist.use(express.json())
 
 Checklist.get("/checklist", async (req, res)=>{
-    let data = await checklist.findAll()
+    let data = await checklist.findAll().catch((err)=>res.send(err))
     res.send(data)
 })
 
@@ -28,7 +28,7 @@ Checklist.post("/checklist/add", async (req, res)=>{
 
 Checklist.patch("/checklist/update/:id", async (req, res)=>{
     let userID = req.params.id
-    let data = await checklist.update(req.body, {where:{ checklist_ID: userID }})
+    let data = await checklist.update(req.body, {where:{ checklist_ID: userID }}).catch((err)=>res.send(err))
     res.send(data)
 })
 

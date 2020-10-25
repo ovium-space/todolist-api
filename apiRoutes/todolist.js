@@ -29,7 +29,7 @@ router.post("/todolist/add", async(req, res)=>{
 
 router.patch("/todolist/update/:id", async (req, res)=>{
     let userID = req.params.id
-    let data = await todolist.update(req.body, {where:{ todolist_ID: userID }})
+    let data = await todolist.update(req.body, {where:{ todolist_ID: userID }}).catch((err)=>res.send(err))
     res.send(data)
 })
 
