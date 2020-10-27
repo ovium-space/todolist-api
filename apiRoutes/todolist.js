@@ -3,7 +3,7 @@ const router = express.Router()
 
 router.use(express.json())
 
-//Model&Database
+//Model
 const { todolist } = require("../models")
 
 router.get("/todolist", async (req, res)=>{

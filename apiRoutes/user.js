@@ -1,11 +1,13 @@
 const express = require("express")
 const User = express.Router()
-const { user } = require('../models')
 
 User.use(express.json())
 
+//Model
+const { user } = require('../models')
+
 User.get("/user", async (req, res)=>{
-    let data = await user.findAll()
+    let data = await user.findAll().catch((err)=>res.send(err))
     res.send(data)
 })
 
