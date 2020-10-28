@@ -1,11 +1,13 @@
 const express = require("express")
 const Checklist = express.Router()
-const { checklist } = require('../models')
 
 Checklist.use(express.json())
 
+//Model
+const { checklist } = require('../models')
+
 Checklist.get("/checklist", async (req, res)=>{
-    let data = await checklist.findAll()
+    let data = await checklist.findAll().catch((err)=>res.send(err))
     res.send(data)
 })
 

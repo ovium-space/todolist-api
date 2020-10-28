@@ -3,11 +3,10 @@ module.exports = (sequelize, DataTypes)=>{
         checklist_ID:{
             type: DataTypes.STRING,
             primaryKey: true,
-            allowNull: false,
-            autoIncrement: true
+            allowNull: false
         },
         todo_ID:{
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
             allowNull: false
         },
         name:{

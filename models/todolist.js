@@ -2,8 +2,7 @@ module.exports = (sequelize, DataTypes) => {
     const Todolist = sequelize.define('todolist', {
         todolist_ID: {
             type: DataTypes.STRING,
-            primaryKey: true,
-            autoIncrement: true
+            primaryKey: true
         },
         name: {
             type: DataTypes.STRING,
