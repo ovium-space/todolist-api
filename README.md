@@ -18,14 +18,13 @@ PATH LIST :
 	Description: Create new todo in todolist
 	NEED: JSON in request body from following format:
 		POST {
-            todolist_ID: <String>
-			name: <String>
-			description: <String>
-			state: <int>
-			expire_datetime: <String format>
-			start_datetime: <String format>
-			checklist: { checklist_ID: Array<String> }
-			user_ID: <String>
+            todolist_ID: <String>,
+			user_ID: <String or NULL>,
+			name: <String>,
+			description: <String>,
+			state: <int>,
+			expire_datetime: <String format>,
+			start_datetime: <String format>,}
 		}
 	Return: created <Object>
 
@@ -61,13 +60,13 @@ PATH LIST :
 	Description: Create new todo in todolist
 	NEED: JSON in request body from following format:
 		POST {
-            checklist_ID: <String>
-		    todo_ID: <Integer>
-			name: <String>
-			description: <String>
-			state: <int>
-			expire_datetime: <String format>
-			due_datetime: <String format>
+            checklist_ID: <String>,
+		    todolist_ID: <String or NULL>,
+			name: <String>,
+			description: <String>,
+			state: <int>,
+			expire_datetime: <String format>,
+			due_datetime: <String format>,
 			checklist_check: <Boolean>
 		}
 	Return: created <Object>
@@ -104,11 +103,11 @@ PATH LIST :
 	Description: Create new todo in user
 	NEED: JSON in request body from following format:
 		POST {
-            user_ID: <String>
-            firstname: <String>
-            lastname: <String>
-            email: <String>
-            username: <String>
+            user_ID: <String>,
+            firstname: <String>,
+            lastname: <String>,
+            email: <String>,
+            username: <String>,
             password: <String>
 		}
 	Return: created <Object>

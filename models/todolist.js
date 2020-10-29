@@ -1,8 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
-    const Todolist = sequelize.define('todolist', {
+    const todolist = sequelize.define('todolist', {
         todolist_ID: {
             type: DataTypes.STRING,
-            primaryKey: true
+            primaryKey: true,
+            allowNull: false
+        },
+        user_ID:{
+            type: DataTypes.STRING,
+            allowNull: true
         },
         name: {
             type: DataTypes.STRING,
@@ -21,19 +26,18 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         expire_datetime:{
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            allowNull: true
         },
         start_datetime: {
             type: DataTypes.DATE,
             allowNull: false
-        },
-        checklist:{
-            type: DataTypes.JSON
-        },
-        user_ID:{
-            type: DataTypes.STRING,
-            allowNull: false
         }
     }, { freezeTableName:true, timestamps: false})
-    return Todolist
+
+    todolist.associate = models => {
+        todolist.hasMany(models.checklist, { foreignKey: "todolist_ID"})
+        todolist.belongsTo(models.user, {foreignKey: "user_ID"})
+    }
+    return todolist
 }

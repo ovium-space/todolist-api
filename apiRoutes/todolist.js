@@ -5,22 +5,24 @@ router.use(express.json())
 
 //Model
 const { todolist } = require("../models")
+const { checklist } = require("../models")
 
 router.get("/todolist", async (req, res)=>{
-    let data = await todolist.findAll().catch((err)=>res.send(err))
+    let data = await todolist.findAll({ include:[checklist] }).catch((err)=>res.send(err))
     res.send(data)
 })
 
 router.post("/todolist/add", async(req, res)=>{
-    const data = await todolist.create({
+    let size = await checklist.count()
+    let data = await todolist.create({
+        todolist_ID: req.body.todolist_ID,
+        user_ID: req.body.user_ID,
         name: req.body.name,
         description: req.body.description,
         state: req.body.state,
-        todolist_index: await todolist.count(),
+        todolist_index: size,
         expire_datetime: req.body.expire_datetime,
-        start_datetime: req.body.start_datetime,
-        checklist: req.body.checklist,
-        user_ID: req.body.user_ID
+        start_datetime: req.body.start_datetime        
     }).catch((err)=>{
         if(err) res.send(err)
     })
@@ -28,15 +30,15 @@ router.post("/todolist/add", async(req, res)=>{
 })
 
 router.patch("/todolist/update/:id", async (req, res)=>{
-    let userID = req.params.id
-    let data = await todolist.update(req.body, {where:{ todolist_ID: userID }})
+    let todolistID = req.params.id
+    let data = await todolist.update(req.body, {where:{ todolist_ID: todolistID }})
     res.send(data)
 })
 
 router.delete("/todolist/delete/:id", async (req, res)=>{
-    let userID = req.params.id
-    let data = await todolist.findOne({where:{ todolist_ID: userID }}).then((result)=>{
-        return todolist.destroy({where:{ todolist_ID: userID }}).then(()=>{return result})
+    let todolistID = req.params.id
+    let data = await todolist.findOne({where:{ todolist_ID: todolistID }}).then((result)=>{
+        return todolist.destroy({where:{ todolist_ID: todolistID }}).then(()=>{return result})
     })
     res.send(data)
 })

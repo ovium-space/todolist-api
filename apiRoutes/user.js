@@ -5,16 +5,16 @@ User.use(express.json())
 
 //Model
 const { user } = require('../models')
+const { todolist } = require('../models')
 
 User.get("/user", async (req, res)=>{
-    let data = await user.findAll().catch((err)=>res.send(err))
+    let data = await user.findAll({ include:[todolist] }).catch((err)=>res.send(err))
     res.send(data)
 })
 
 User.post("/user/add", async (req, res)=>{
-    let size = await user.count()
     let data = await user.create({
-        user_ID: req.body.userID,
+        user_ID: req.body.user_ID,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
