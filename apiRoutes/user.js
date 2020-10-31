@@ -6,9 +6,10 @@ User.use(express.json())
 //Model
 const { user } = require('../models')
 const { todolist } = require('../models')
+const { team } = require('../models')
 
 User.get("/user", async (req, res)=>{
-    let data = await user.findAll({ include:[todolist] }).catch((err)=>res.send(err))
+    let data = await user.findAll({ include:[todolist, team] }).catch((err)=>res.send(err))
     res.send(data)
 })
 

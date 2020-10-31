@@ -6,6 +6,7 @@ const api = express()
 const todoAPI = require("./apiRoutes/todolist")
 const checklistAPI = require("./apiRoutes/checklist")
 const userAPI = require("./apiRoutes/user")
+const teamAPI = require("./apiRoutes/team")
 
 //Database
 const db = require('./models')
@@ -18,6 +19,7 @@ api.use(express.json())
 api.use("/api/v1/", todoAPI)
 api.use("/api/v1/", checklistAPI)
 api.use("/api/v1/", userAPI)
+api.use("/api/v1/", teamAPI)
 
 //Index
 api.get("/", (req, res)=>{
