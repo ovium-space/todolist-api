@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) =>{
         }
     }, {freezeTableName: true})
     team.associate = models => {
-        team.belongsToMany(models.user, {through:'team_user'})
+        team.belongsToMany(models.user, {through:'team_user', foreignKey:"team_ID"})
         team.belongsTo(models.user, {foreignKey:"leader_ID"})
     }
     return team
