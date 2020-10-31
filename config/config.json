@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "12345678",
+    "password": "",
     "database": "ex",
-    "host": "ovium.space",
+    "host": "localhost",
     "dialect": "mysql"
   },
   "test": {

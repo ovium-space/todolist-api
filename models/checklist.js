@@ -1,22 +1,17 @@
 module.exports = (sequelize, DataTypes)=>{
-    const model = sequelize.define("checklist", {
+    const checklist = sequelize.define("checklist", {
         checklist_ID:{
             type: DataTypes.STRING,
             primaryKey: true,
-            allowNull: false,
-            autoIncrement: true
-        },
-        todo_ID:{
-            type: DataTypes.INTEGER,
             allowNull: false
+        },
+        todolist_ID:{
+            type: DataTypes.STRING,
+            allowNull: true
         },
         name:{
             type : DataTypes.STRING,
             allowNull: false
-        },
-        description:{
-            type : DataTypes.STRING,
-            allowNull : true
         },
         state:{
             type: DataTypes.INTEGER,
@@ -39,9 +34,10 @@ module.exports = (sequelize, DataTypes)=>{
             allowNull: false
         }
 
-    }, {
-        freezeTableName: true,
-        timestamps : false
-    })
-    return model
+    }, { freezeTableName: true, timestamps : false})
+
+    checklist.associate = models => {
+        checklist.belongsTo(models.todolist, { foreignKey: "todolist_ID"})
+    }
+    return checklist
 }
