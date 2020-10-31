@@ -6,6 +6,7 @@ const api = express()
 const todoAPI = require("./apiRoutes/todolist")
 const checklistAPI = require("./apiRoutes/checklist")
 const userAPI = require("./apiRoutes/user")
+const teamAPI = require("./apiRoutes/team")
 
 //Database
 const db = require('./models')
@@ -18,30 +19,11 @@ api.use(express.json())
 api.use("/api/v1/", todoAPI)
 api.use("/api/v1/", checklistAPI)
 api.use("/api/v1/", userAPI)
+api.use("/api/v1/", teamAPI)
 
 //Index
 api.get("/", async (req, res)=>{
     console.log("INDEX")
-     let teamADD = await db.team.create({
-        team_ID:"1",
-        name:"trainee"
-    })
-     let bruh = await db.user.create({
-        user_ID: "3",
-        firstname: "punpetch",
-        lastname: "prakongapak",
-        email: "bigbosskts22@hotmail.com",
-        username: "bigboss",
-        password: "123456"
-    })
-    let find = await db.user.findOne({
-        where:{
-            user_ID: "3"
-        }
-    })
-
-
-    console.log(find)
     res.sendStatus(200)
 })
 

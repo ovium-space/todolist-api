@@ -29,8 +29,9 @@ module.exports = (sequelize, Datatype) => {
     }, { freezeTableName:true, timestamps:false})
 
     user.associate = models => {
-        user.belongsToMany(models.team, {through:'team_user', as:"User"})
         user.hasMany(models.todolist, {foreignKey: "user_ID"})
+        user.belongsToMany(models.team, {through:'team_user'})
+        user.hasMany(models.team, {foreignKey:"leader_ID"})
     }
     return user
 }
