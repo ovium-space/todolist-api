@@ -22,7 +22,7 @@ api.use("/api/v1/", userAPI)
 api.use("/api/v1/", teamAPI)
 
 //Index
-api.get("/", async (req, res)=>{
+api.get("/", (req, res)=>{
     console.log("INDEX")
     res.sendStatus(200)
 })
