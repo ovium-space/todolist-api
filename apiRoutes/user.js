@@ -8,7 +8,7 @@ const { user } = require('../models')
 const { todolist } = require('../models')
 
 User.get("/user", async (req, res)=>{
-    let data = await user.findAll({ include:[todolist] }).catch((err)=>res.send(err))
+    let data = await user.finAll({ include:[todolist] }).catch((err)=>res.send(err))
     res.send(data)
 })
 

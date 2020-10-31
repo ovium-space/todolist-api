@@ -1,5 +1,5 @@
 module.exports = (sequelize, Datatype) => {
-    let user = sequelize.define("user", {
+    const user = sequelize.define("user", {
         user_ID:{
             type: Datatype.STRING,
             primaryKey: true,
@@ -29,6 +29,7 @@ module.exports = (sequelize, Datatype) => {
     }, { freezeTableName:true, timestamps:false})
 
     user.associate = models => {
+        user.belongsToMany(models.team, {through:'team_user', as:"User"})
         user.hasMany(models.todolist, {foreignKey: "user_ID"})
     }
     return user

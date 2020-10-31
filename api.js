@@ -20,8 +20,28 @@ api.use("/api/v1/", checklistAPI)
 api.use("/api/v1/", userAPI)
 
 //Index
-api.get("/", (req, res)=>{
+api.get("/", async (req, res)=>{
     console.log("INDEX")
+     let teamADD = await db.team.create({
+        team_ID:"1",
+        name:"trainee"
+    })
+     let bruh = await db.user.create({
+        user_ID: "3",
+        firstname: "punpetch",
+        lastname: "prakongapak",
+        email: "bigbosskts22@hotmail.com",
+        username: "bigboss",
+        password: "123456"
+    })
+    let find = await db.user.findOne({
+        where:{
+            user_ID: "3"
+        }
+    })
+
+
+    console.log(find)
     res.sendStatus(200)
 })
 
