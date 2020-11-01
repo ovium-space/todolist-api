@@ -1,0 +1,2 @@
+TOFIX:
+    - .count() to get size of index is getting size of *all* object

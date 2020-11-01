@@ -13,7 +13,7 @@ router.get("/todolist", async (req, res)=>{
 })
 
 router.post("/todolist/add", async(req, res)=>{
-    let size = await checklist.count()
+    let size = await todolist.count()
     let data = await todolist.create({
         todolist_ID: req.body.todolist_ID,
         user_ID: req.body.user_ID,
