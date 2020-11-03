@@ -1,6 +1,6 @@
 //Modules
 const express = require('express')
-const api = express()
+const jwt = require('jsonwebtoken')
 
 //Rounters
 const todoAPI = require("./apiRoutes/todolist")
@@ -16,17 +16,44 @@ const db = require('./models')
 const port = process.env.PORT || 3000
 
 //API USED
+const api = express()
 api.use(express.json())
-api.use("/api/v1/", todoAPI)
-api.use("/api/v1/", checklistAPI)
-api.use("/api/v1/", userAPI)
-api.use("/api/v1/", teamAPI)
-api.use("/api/v1/team", team_todolist)
+
+//PATH
+api.use("/api/v1/", authenticate, todoAPI)
+api.use("/api/v1/", authenticate, checklistAPI)
+api.use("/api/v1/", authenticate, userAPI)
+api.use("/api/v1/", authenticate, teamAPI)
+api.use("/api/v1/team", authenticate, team_todolist)
 
 //Index
-api.get("/", (req, res)=>{
+api.get("/", authenticate,(req, res)=>{
     console.log("INDEX")
     res.sendStatus(200)
+})
+
+//Login
+api.get("/login", async (req, res)=>{
+    let username = req.body.username
+    let password = req.body.password
+
+    let findUser = await db.user.findOne({where:{ username: username}}).catch((err)=>{
+        console.log(err)
+        return res.sendStatus(400)
+    })
+
+    //Check if user is exist
+    if(findUser==null) res.sendStatus(404)
+
+    let userData = findUser.dataValues
+    let userID = findUser.user_ID
+    let userPassword = userData.password
+
+    //Check password
+    if(userPassword == password){
+        let token = jwt.sign({ username: userID}, "SECRET")
+        res.json({accessToken: token})
+    }else res.sendStatus(401)
 })
 
 //Debug only!
@@ -46,3 +73,22 @@ db.sequelize.authenticate().then(()=>{
 api.listen(port, ()=>{
     console.log(`Listen on port: ${port}`)
 })
+
+function authenticate(req, res, next){
+    let authHeader = req.headers.authorization
+    let token = authHeader && authHeader.split(" ")[1]
+    //Empty token
+    if(token==null) return res.sendStatus(401)
+
+    jwt.verify(token, "SECRET", async (err, user)=>{
+        //invalid tokens
+        if(err){
+            console.log(err)
+            return res.sendStatus(400)
+        }
+        req.body.username = user.username
+        next()
+    })
+    
+    
+}
