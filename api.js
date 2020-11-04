@@ -1,6 +1,7 @@
 //Modules
 const express = require('express')
 const jwt = require('jsonwebtoken')
+const authenticator = require('./authenticator')
 
 //Rounters
 const todoAPI = require("./apiRoutes/todolist")
@@ -8,6 +9,7 @@ const checklistAPI = require("./apiRoutes/checklist")
 const userAPI = require("./apiRoutes/user")
 const teamAPI = require("./apiRoutes/team")
 const team_todolist = require("./apiRoutes/team_todolist")
+const authenticate = require("./apiRoutes/authenticate")
 
 //Database
 const db = require('./models')
@@ -20,44 +22,21 @@ const api = express()
 api.use(express.json())
 
 //PATH
-api.use("/api/v1/", authenticate, todoAPI)
-api.use("/api/v1/", authenticate, checklistAPI)
-api.use("/api/v1/", authenticate, userAPI)
-api.use("/api/v1/", authenticate, teamAPI)
-api.use("/api/v1/team", authenticate, team_todolist)
+api.use("/api/v1/todolist", authenticator, todoAPI)
+api.use("/api/v1/checklist", authenticator, checklistAPI)
+api.use("/api/v1/user", authenticator, userAPI)
+api.use("/api/v1/team", authenticator, teamAPI)
+api.use("/api/v1/team/todolist", authenticator, team_todolist)
+api.use("/login", authenticate)
 
 //Index
-api.get("/", authenticate,(req, res)=>{
+api.get("/", (req, res)=>{
     console.log("INDEX")
     res.sendStatus(200)
 })
 
-//Login
-api.get("/login", async (req, res)=>{
-    let username = req.body.username
-    let password = req.body.password
-
-    let findUser = await db.user.findOne({where:{ username: username}}).catch((err)=>{
-        console.log(err)
-        return res.sendStatus(400)
-    })
-
-    //Check if user is exist
-    if(findUser==null) res.sendStatus(404)
-
-    let userData = findUser.dataValues
-    let userID = findUser.user_ID
-    let userPassword = userData.password
-
-    //Check password
-    if(userPassword == password){
-        let token = jwt.sign({ username: userID}, "SECRET")
-        res.json({accessToken: token})
-    }else res.sendStatus(401)
-})
-
 //Debug only!
-api.get("/reset", async (req, res)=>{
+api.get("/reset", authenticator, async (req, res)=>{
     db.sequelize.sync({force: true}).then(()=>{console.log("Database Sync!")}).catch(err=>console.log(err))
     res.sendStatus(200)
 })
@@ -74,21 +53,3 @@ api.listen(port, ()=>{
     console.log(`Listen on port: ${port}`)
 })
 
-function authenticate(req, res, next){
-    let authHeader = req.headers.authorization
-    let token = authHeader && authHeader.split(" ")[1]
-    //Empty token
-    if(token==null) return res.sendStatus(401)
-
-    jwt.verify(token, "SECRET", async (err, user)=>{
-        //invalid tokens
-        if(err){
-            console.log(err)
-            return res.sendStatus(400)
-        }
-        req.body.username = user.username
-        next()
-    })
-    
-    
-}
