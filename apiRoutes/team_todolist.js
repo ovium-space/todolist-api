@@ -7,7 +7,7 @@ router.use(express.json())
 const { team_todolist } = require("../models")
 const { team } = require("../models")
 
-router.get("/todolist", async (req, res) => {
+router.get("/", async (req, res) => {
     let data = await team_todolist.findAll({include:[team]}).catch((err)=>{
         console.log(err)
         res.sendStatus(400)
@@ -15,7 +15,7 @@ router.get("/todolist", async (req, res) => {
     res.send(data)
 })
 
-router.get("/todolist/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
     let todolistID = req.params.id
     let data = await team_todolist.findAll({where:{todolist_ID: todolistID}}).catch((err)=>{
         console.log(err)
@@ -24,7 +24,7 @@ router.get("/todolist/:id", async (req, res) => {
     res.send(data)
 })
 
-router.post("/todolist/add", async (req, res) => {
+router.post("/add", async (req, res) => {
     let size = await team_todolist.count()
     let data = await team_todolist.create({
         todolist_ID: req.body.todolist_ID,
@@ -42,7 +42,7 @@ router.post("/todolist/add", async (req, res) => {
     res.send(data)
 })
 
-router.patch("/todolist/update/:id", async (req, res) => {
+router.patch("/update/:id", async (req, res) => {
     let todolistID = req.params.id
     let data = await team_todolist.update(req.body, {where:{todolist_ID: todolistID}}).catch((err)=>{
         console.log(err)
@@ -51,7 +51,7 @@ router.patch("/todolist/update/:id", async (req, res) => {
     res.send(data)
 })
 
-router.delete("/todolist/delete/:id", async (req, res) => {
+router.delete("/delete/:id", async (req, res) => {
     let todolistID = req.params.id
     let data =  await team_todolist.findOne({where: {todolist_ID: todolistID}}).then((result) => {
             return team_todolist.destroy({where:{todolist_ID: todolistID}}).then(() => {return result})
