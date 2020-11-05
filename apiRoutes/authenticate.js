@@ -11,7 +11,7 @@ const { user } = require('../models')
 router.post("/", async (req, res)=>{
     let username = req.body.username
     let password = req.body.password
-
+    if(!username && !password) return res.sendStatus(400)
     let findUser = await user.findOne({where:{ username: username}}).catch((err)=>{
         console.log(err)
         return res.sendStatus(400)
@@ -26,9 +26,9 @@ router.post("/", async (req, res)=>{
 
     //Check password
     if(userPassword == password){
-        let token = jwt.sign({ user_ID: userID}, "SECRET")
+        let token = jwt.sign({ user_ID: userID}, process.env.SECRET_KEY)
         res.json({accessToken: token})
-    }else res.send("Incorrect Password.")
+    }else res.status(401).send("Incorrect Password.")
 })
 
 module.exports = router

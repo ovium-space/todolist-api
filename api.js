@@ -1,7 +1,9 @@
+require('dotenv').config()
 //Modules
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const authenticator = require('./authenticator')
+
 
 //Rounters
 const todoAPI = require("./apiRoutes/todolist")
