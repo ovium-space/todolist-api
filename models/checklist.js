@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes)=>{
         },
         todolist_ID:{
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false
         },
         name:{
             type : DataTypes.STRING,
