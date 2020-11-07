@@ -40,7 +40,7 @@ router.post("/checklist/add", async (req, res)=>{
         console.log(err)
         res.sendStatus(400)
     })
-    data.addUser(req.body.user_ID)
+    data.addUser(req.body.user_ID, { through: { assign: false}})
     res.send(data)
 })
 

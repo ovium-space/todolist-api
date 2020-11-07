@@ -8,7 +8,7 @@ const checklistAPI = require("./apiRoutes/checklist")
 const userAPI = require("./apiRoutes/user")
 const teamAPI = require("./apiRoutes/team")
 const team_todolist = require("./apiRoutes/team_todolist")
-const team_checklist = require("./apiRoutes/team_checklist")
+const team_checklist1 = require("./apiRoutes/team_checklist")
 
 //Database
 const db = require('./models')
@@ -23,10 +23,16 @@ api.use("/api/v1/", checklistAPI)
 api.use("/api/v1/", userAPI)
 api.use("/api/v1/", teamAPI)
 api.use("/api/v1/team", team_todolist)
-api.use("/api/v1/team", team_checklist)
+api.use("/api/v1/team", team_checklist1)
+
+const { user } = require("./models")
+const { team_checklist } = require("./models")
 
 //Index
 api.get("/", (req, res)=>{
+    let user1 = user.findOne().then(data => {
+        console.log(data.map(data => data.dataValues.user_ID))
+    })
     console.log("INDEX")
     res.sendStatus(200)
 })
