@@ -30,9 +30,6 @@ const { team_checklist } = require("./models")
 
 //Index
 api.get("/", (req, res)=>{
-    let user1 = user.findOne().then(data => {
-        console.log(data.map(data => data.dataValues.user_ID))
-    })
     console.log("INDEX")
     res.sendStatus(200)
 })
