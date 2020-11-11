@@ -8,7 +8,7 @@ const checklistAPI = require("./apiRoutes/checklist")
 const userAPI = require("./apiRoutes/user")
 const teamAPI = require("./apiRoutes/team")
 const team_todolist = require("./apiRoutes/team_todolist")
-const team_checklist1 = require("./apiRoutes/team_checklist")
+const team_checklist = require("./apiRoutes/team_checklist")
 
 //Database
 const db = require('./models')
@@ -17,16 +17,17 @@ const db = require('./models')
 const port = process.env.PORT || 3000
 
 //API USED
+const api = express()
 api.use(express.json())
-api.use("/api/v1/", todoAPI)
-api.use("/api/v1/", checklistAPI)
-api.use("/api/v1/", userAPI)
-api.use("/api/v1/", teamAPI)
-api.use("/api/v1/team", team_todolist)
-api.use("/api/v1/team", team_checklist1)
 
-const { user } = require("./models")
-const { team_checklist } = require("./models")
+//PATH
+api.use("/api/v1/todolist", authenticator, todoAPI)
+api.use("/api/v1/checklist", authenticator, checklistAPI)
+api.use("/api/v1/user", authenticator, userAPI)
+api.use("/api/v1/team", authenticator, teamAPI)
+api.use("/api/v1/team/todolist", authenticator, team_todolist)
+api.use("/api/v1/team/checklist", authenticator, team_checklist)
+api.use("/login", authenticate)
 
 //Index
 api.get("/", (req, res)=>{

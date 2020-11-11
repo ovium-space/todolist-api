@@ -8,7 +8,7 @@ const { team_checklist } = require("../models")
 const { user } = require("../models")
 const { team } = require("../models")
 
-router.get("/checklist", async (req, res)=>{
+router.get("/", async (req, res)=>{
     let data = await team_checklist.findAll( {include:[team_todolist]}).catch((err)=>{
         console.log(err)
         req.sendStatus(400)
@@ -16,7 +16,7 @@ router.get("/checklist", async (req, res)=>{
     res.send(data)
 })
 
-router.get("/checklist/:id", async (req, res)=>{
+router.get("/:id", async (req, res)=>{
     let checklsitID = req.params.id
     let data = await team_checklist.findOne( {where:{checklist_ID: checklsitID}}).catch((err)=>{
         console.log(err)
@@ -25,7 +25,7 @@ router.get("/checklist/:id", async (req, res)=>{
     res.send(data)
 })
 
-router.post("/checklist/add", async (req, res)=>{
+router.post("/add", async (req, res)=>{
     //Create data
     let size = await team_checklist.count()
     let data = await team_checklist.create({
@@ -68,7 +68,7 @@ router.post("/checklist/add", async (req, res)=>{
     
 })
 
-router.patch("/checklist/update/:id", async (req, res)=>{
+router.patch("/update/:id", async (req, res)=>{
     //Keep userlist from request body then delete it out of request body
     let userlist = req.body.userlist
 
@@ -107,7 +107,7 @@ router.patch("/checklist/update/:id", async (req, res)=>{
     res.send(data)
 })
 
-router.delete("/checklist/delete/:id", async (req, res)=>{
+router.delete("/delete/:id", async (req, res)=>{
     let checklistID = req.params.id
     let data =  await team_checklist.findOne({where: {checklist_ID: checklistID}}).then((result) => {
         return team_checklist.destroy({where:{checklist_ID: checklistID}}).then(() => {return result})

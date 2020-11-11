@@ -8,12 +8,12 @@ const { user } = require('../models')
 const { todolist } = require('../models')
 const { team } = require('../models')
 
-router.get("/user", async (req, res)=>{
+router.get("/", async (req, res)=>{
     let data = await user.findAll({ include:[todolist, team] }).catch((err)=>res.send(err))
     res.send(data)
 })
 
-router.post("/user/add", async (req, res)=>{
+router.post("/add", async (req, res)=>{
     let data = await user.create({
         user_ID: req.body.user_ID,
         firstname: req.body.firstname,
@@ -27,13 +27,13 @@ router.post("/user/add", async (req, res)=>{
     res.send(data)
 })
 
-router.patch("/user/update/:id", async (req, res)=>{
+router.patch("/update/:id", async (req, res)=>{
     let userID = req.params.id
     let data = await user.update(req.body, {where:{ user_ID: userID }}).catch((err)=>res.send(err))
     res.send(data)
 })
 
-router.delete("/user/delete/:id", async (req, res)=>{
+router.delete("/delete/:id", async (req, res)=>{
     let userID = req.params.id
     let data =  await user.findOne({where: {user_ID: userID}}).then((result) => {
         return user.destroy({where:{user_ID: userID}}).then(() => {return result})
