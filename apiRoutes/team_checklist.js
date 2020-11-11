@@ -18,7 +18,7 @@ router.get("/checklist", async (req, res)=>{
 
 router.get("/checklist/:id", async (req, res)=>{
     let checklsitID = req.params.id
-    let data = await team_checklist.findAll( {where:{checklist_ID: checklsitID}}).catch((err)=>{
+    let data = await team_checklist.findOne( {where:{checklist_ID: checklsitID}}).catch((err)=>{
         console.log(err)
         req.sendStatus(400)
     })
@@ -26,6 +26,7 @@ router.get("/checklist/:id", async (req, res)=>{
 })
 
 router.post("/checklist/add", async (req, res)=>{
+    //Create data
     let size = await team_checklist.count()
     let data = await team_checklist.create({
         checklist_ID: req.body.checklist_ID,
@@ -41,30 +42,68 @@ router.post("/checklist/add", async (req, res)=>{
         console.log(err)
         res.sendStatus(400)
     })
+
+    //Added association with assign value upon created
     let userlist = req.body.userlist
-    let allUserInTeam = Object.keys(req.body.userlist)
-    allUserInTeam.forEach( (userKey) => {
-        data.addUser(userKey, {through:{assign: userlist[userKey]}})
+
+    //If userlist is empty
+    if(!userlist) return res.status(400).send("Empty userlist")
+    
+    let assign_trueUser = userlist.true
+    let assign_falseUser = userlist.false
+
+    //If ok return false else if error return true to check
+    let isError1 = await data.addUsers(assign_trueUser, {through:{assign: true}}).then(()=>{return false}).catch(err=>{
+        console.log(err)
+        return true
+    })
+    let isError2 = await data.addUsers(assign_falseUser, {through:{assign: false}}).then(()=>{return false}).catch(err=>{
+        console.log(err)
+        return true
     })
 
-
-
+    //Check if catch error then return status 200 instead
+    if(isError1 || isError2) return res.status(200).send("Invalid userlist")
     res.send(data)
+    
 })
 
 router.patch("/checklist/update/:id", async (req, res)=>{
+    //Keep userlist from request body then delete it out of request body
     let userlist = req.body.userlist
-    let allUserInTeam = Object.keys(req.body.userlist)
+
+    //If userlist empty
+    if(!userlist) return res.status(400).send("Empty userlist")
+
     delete req.body.userlist
+
+    //Update data
     let checklistID = req.params.id
     let updateData = await team_checklist.findOne({where:{checklist_ID: checklistID}})
     let data = await team_checklist.update(req.body, {where:{checklist_ID: checklistID}}).catch((err)=>{
         console.log(err)
         res.sendStatus(400)
     })
-    allUserInTeam.forEach( (userKey) => {
-        updateData.addUser(userKey, {through:{assign: userlist[userKey]}})
+
+    //find which checklist that has been updated
+    let updatedChecklist = await team_checklist.findOne({where:{checklist_ID: checklistID}})
+
+    let assign_trueUser = userlist.true
+    let assign_falseUser = userlist.false
+
+    //If ok return false else if error return true to check
+    let isError1 = await updatedChecklist.addUsers(assign_trueUser, {through:{assign: true}}).then(()=>{return false}).catch(err=>{
+        console.log(err)
+        return true
     })
+    let isError2 = await updatedChecklist.addUsers(assign_falseUser, {through:{assign: false}}).then(()=>{return false}).catch(err=>{
+        console.log(err)
+        return true
+    })
+
+    //Check if catch error then return status 200 instead
+    if(isError1 || isError2) return res.status(200).send("Invalid userlist")
+
     res.send(data)
 })
 

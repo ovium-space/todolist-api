@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes)=>{
     const Tchecklist_user = sequelize.define("Tchecklist_user", {
-        assign : {
+        assign:{
             type: DataTypes.BOOLEAN,
             allowNull: false
         }
@@ -8,3 +8,4 @@ module.exports = (sequelize, DataTypes)=>{
 
     return Tchecklist_user
 }
+
