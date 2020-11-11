@@ -1,6 +1,9 @@
+require('dotenv').config()
 //Modules
 const express = require('express')
-const api = express()
+const jwt = require('jsonwebtoken')
+const authenticator = require('./authenticator')
+
 
 //Rounters
 const todoAPI = require("./apiRoutes/todolist")
@@ -30,6 +33,7 @@ api.use("/api/v1/team/todolist", authenticator, team_todolist)
 api.use("/login", authenticate)
 api.use("/api/v1/team/checklist", authenticator, team_checklist)
 
+
 //Index
 api.get("/", (req, res)=>{
     console.log("INDEX")
@@ -37,7 +41,7 @@ api.get("/", (req, res)=>{
 })
 
 //Debug only!
-api.get("/reset", async (req, res)=>{
+api.get("/reset", authenticator, async (req, res)=>{
     db.sequelize.sync({force: true}).then(()=>{console.log("Database Sync!")}).catch(err=>console.log(err))
     res.sendStatus(200)
 })
@@ -53,3 +57,4 @@ db.sequelize.authenticate().then(()=>{
 api.listen(port, ()=>{
     console.log(`Listen on port: ${port}`)
 })
+
