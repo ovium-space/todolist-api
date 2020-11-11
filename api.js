@@ -8,6 +8,7 @@ const checklistAPI = require("./apiRoutes/checklist")
 const userAPI = require("./apiRoutes/user")
 const teamAPI = require("./apiRoutes/team")
 const team_todolist = require("./apiRoutes/team_todolist")
+const authenticate = require("./apiRoutes/authenticate")
 const team_checklist = require("./apiRoutes/team_checklist")
 
 //Database
@@ -26,8 +27,8 @@ api.use("/api/v1/checklist", authenticator, checklistAPI)
 api.use("/api/v1/user", authenticator, userAPI)
 api.use("/api/v1/team", authenticator, teamAPI)
 api.use("/api/v1/team/todolist", authenticator, team_todolist)
-api.use("/api/v1/team/checklist", authenticator, team_checklist)
 api.use("/login", authenticate)
+api.use("/api/v1/team/checklist", authenticator, team_checklist)
 
 //Index
 api.get("/", (req, res)=>{
