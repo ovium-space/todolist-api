@@ -36,7 +36,6 @@ api.use("/api/v1/team/checklist", authenticator, team_checklist)
 
 //Index
 api.get("/", (req, res)=>{
-    console.log("INDEX")
     res.sendStatus(200)
 })
 
