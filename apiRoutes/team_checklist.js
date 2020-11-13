@@ -5,8 +5,6 @@ router.use(express.json())
 
 const { team_todolist } = require("../models")
 const { team_checklist } = require("../models")
-const { user } = require("../models")
-const { team } = require("../models")
 
 router.get("/", async (req, res)=>{
     let data = await team_checklist.findAll( {include:[team_todolist]}).catch((err)=>{
