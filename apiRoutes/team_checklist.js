@@ -15,8 +15,8 @@ router.get("/", async (req, res)=>{
 })
 
 router.get("/:id", async (req, res)=>{
-    let checklsitID = req.params.id
-    let data = await team_checklist.findOne( {where:{checklist_ID: checklsitID}}).catch((err)=>{
+    let checklistID = req.params.id
+    let data = await team_checklist.findOne( {where:{checklist_ID: checklistID}}).catch((err)=>{
         console.log(err)
         req.sendStatus(400)
     })
@@ -62,7 +62,7 @@ router.post("/add", async (req, res)=>{
     })
 
     //Check if catch error then return status 200 instead
-    if(isError1 || isError2) return res.status(200).send("Invalid userlist")
+    if(isError1 || isError2) return res.status(400).send("Invalid userlist")
     res.send(data)
     
 })
@@ -100,7 +100,7 @@ router.patch("/update/:id", async (req, res)=>{
     })
 
     //Check if catch error then return status 200 instead
-    if(isError1 || isError2) return res.status(200).send("Invalid userlist")
+    if(isError1 || isError2) return res.status(400).send("Invalid userlist")
 
     res.send(data)
 })
