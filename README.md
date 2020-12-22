@@ -142,4 +142,4 @@ PATH LIST :
         DELETE: Return nothing if there is no record to delete from following ID
 
     - Symbol:
-        < > = Value
+        < > = Values
