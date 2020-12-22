@@ -43,12 +43,13 @@ router.post("/add", async (req, res)=>{
 
     //Added association with assign value upon created
     let userlist = req.body.userlist
+    let userlistKey = Object.keys(userlist)
 
     //If userlist is empty
     if(!userlist) return res.status(400).send("Empty userlist")
     
-    let assign_trueUser = userlist.true
-    let assign_falseUser = userlist.false
+    let assign_trueUser = userlistKey.filter((key)=>userlist[key] == true)
+    let assign_falseUser = userlistKey.filter((key)=>userlist[key] == false)
 
     //If ok return false else if error return true to check
     let isError1 = await data.addUsers(assign_trueUser, {through:{assign: true}}).then(()=>{return false}).catch(err=>{
@@ -69,6 +70,7 @@ router.post("/add", async (req, res)=>{
 router.patch("/update/:id", async (req, res)=>{
     //Keep userlist from request body then delete it out of request body
     let userlist = req.body.userlist
+    let userlistKey = Object.keys(userlist)
 
     //If userlist empty
     if(!userlist) return res.status(400).send("Empty userlist")
@@ -84,17 +86,15 @@ router.patch("/update/:id", async (req, res)=>{
     })
 
     //find which checklist that has been updated
-    let updatedChecklist = await team_checklist.findOne({where:{checklist_ID: checklistID}})
-
-    let assign_trueUser = userlist.true
-    let assign_falseUser = userlist.false
+    let assign_trueUser = userlistKey.filter((key)=>userlist[key] == true)
+    let assign_falseUser = userlistKey.filter((key)=>userlist[key] == false)
 
     //If ok return false else if error return true to check
-    let isError1 = await updatedChecklist.addUsers(assign_trueUser, {through:{assign: true}}).then(()=>{return false}).catch(err=>{
+    let isError1 = await updateData.addUsers(assign_trueUser, {through:{assign: true}}).then(()=>{return false}).catch(err=>{
         console.log(err)
         return true
     })
-    let isError2 = await updatedChecklist.addUsers(assign_falseUser, {through:{assign: false}}).then(()=>{return false}).catch(err=>{
+    let isError2 = await updateData.addUsers(assign_falseUser, {through:{assign: false}}).then(()=>{return false}).catch(err=>{
         console.log(err)
         return true
     })

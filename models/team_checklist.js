@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes)=>{
             type: DataTypes.STRING,
             allowNull: false
         },
+        userlist:{
+            type: DataTypes.JSON,
+            allowNull: true
+        },
         name:{
             type : DataTypes.STRING,
             allowNull: false
