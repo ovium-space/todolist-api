@@ -8,9 +8,11 @@ const { team } = require('../models')
 const { user } = require("../models")
 
 router.get("/", async (req, res) => {
+    //Find all data with users in team
     let data = await team.findAll({
         include:[{
             model: user,
+            as: "with",
             through:{attributes:[]},
             attributes:{exclude:["password"]}
         }]
@@ -18,10 +20,12 @@ router.get("/", async (req, res) => {
         console.log(err)
         return res.status(500).send("Data corrupted.")
     })
+
     res.status(200).send(data)
 })
 
 router.post("/add", async (req, res) => {
+    //Create data from request
     let data = await team.create({
         team_ID: req.body.team_ID,
         leader_ID: req.body.leader_ID,
@@ -30,57 +34,81 @@ router.post("/add", async (req, res) => {
         console.log(err)
         return res.sendStatus(400)
     })
-    data.addAllTeam(req.body.leader_ID)
+
+    //Add leader to his own team
+    data.addWith(req.body.leader_ID)
+
     res.status(201).send(data)
 })
 
 router.patch("/update/:id", async (req,res)=>{
     let teamID = req.params.id
+
     //Check if id is Integer or not
     if(isNaN(teamID)) return res.status(400).send("ID should be number.")
-    //Check if id is found or not
+
+    //Search for team by teamID
     let isFound = await team.findOne({where:{team_ID: teamID}}).catch(err=>{
         console.log(err)
         return res.sendStatus(500)
     })
+
+    //If team not found then return 404
     if (isFound == null) return res.status(404).send("Team not found.")
-    //Update
+
+    //If team found then update data
     let data = await team.update(req.body, {where:{team_ID: teamID}}).catch(err=>{
         console.log(err)
         return res.sendStatus(500)
     })
+
     res.status(200).send(data)
 })
 
 router.patch("/user/add/:id", async (req, res) => {
     let teamID = req.params.id
     let userlist = req.body.userlist
+
     //Check if id is Integer or not
     if(isNaN(teamID)) return res.status(400).send("ID should be number.")
+
     //Get team data from teamID
     let teamData = await team.findOne({where:{ team_ID: teamID }}).catch(err => {
         console.log(err)
-        res.sendStatus(500)
+        return res.sendStatus(500)
     })
+
     //Check if id is found or not
     if(teamData == null) return res.status(404).send("Team not found.")
-    teamData.addAllTeam(userlist)
+
+    //Add user to team
+    let added = await teamData.addWith(userlist).catch(err => {
+        console.log(err)
+        res.status(400).send("There is error adding user into team, maybe there is some user that already in this team.")
+        return false
+    })
     res.status(200).send(teamData)
 })
 
 router.patch("/user/delete/:id", async (req, res) => {
     let teamID = req.params.id
     let userlist = req.body.userlist
+
     //Check if id is Integer or not
     if(isNaN(teamID)) return res.status(400).send("ID should be number.")
+
     //Get team data from teamID
     let teamData = await team.findOne({where:{ team_ID: teamID }}).catch(err => {
         console.log(err)
         res.sendStatus(500)
     })
+
     //Check if id is found or not
     if(teamData == null) return res.status(404).send("Team not found.")
-    teamData.removeAllTeam(userlist)
+
+    //Remove user from team
+    teamData.removeWith(userlist)
+
     res.status(200).send(teamData)
 })
 
