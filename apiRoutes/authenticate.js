@@ -14,11 +14,14 @@ router.post("/", async (req, res)=>{
     if(!username && !password) return res.sendStatus(400)
     let findUser = await user.findOne({where:{ username: username}}).catch((err)=>{
         console.log(err)
-        return res.sendStatus(400)
     })
 
+    console.log(findUser)
+
     //Username not exist
-    if(findUser==null) return res.sendStatus(404)
+    if(findUser==null) {
+        return res.status(404).send("User not found.")
+    }
 
     let userData = findUser.dataValues
     let userID = findUser.user_ID
@@ -27,7 +30,7 @@ router.post("/", async (req, res)=>{
     //Check password
     if(userPassword == password){
         let token = jwt.sign({ user_ID: userID}, process.env.SECRET_KEY)
-        res.json({accessToken: token})
+        res.status(200).json({accessToken: token})
     }else res.status(401).send("Incorrect Password.")
 })
 
