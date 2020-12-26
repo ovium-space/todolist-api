@@ -7,17 +7,11 @@ router.use(express.json())
 const { team_todolist } = require("../models")
 const { team } = require("../models")
 
-router.get("/", async (req, res) => {
-    let data = await team_todolist.findAll({include:[team]}).catch((err)=>{
-        console.log(err)
-        res.sendStatus(400)
-    })
-    res.send(data)
-})
-
 router.get("/:id", async (req, res) => {
-    let todolistID = req.params.id
-    let data = await team_todolist.findAll({where:{todolist_ID: todolistID}}).catch((err)=>{
+    let data = await team_todolist.findAll({
+        where:{ todolist_ID: req.params.id},
+        include:[team]
+    }).catch((err)=>{
         console.log(err)
         res.sendStatus(400)
     })

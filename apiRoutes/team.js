@@ -7,8 +7,9 @@ router.use(express.json())
 const { team } = require('../models')
 const { user } = require("../models")
 
-router.get("/", async (req, res) => {
+router.get("/:id", async (req, res) => {
     let data = await team.findAll({
+        where:{ team_ID: req.params.id},
         include:[{
             model: user,
             through: { attributes:[] }

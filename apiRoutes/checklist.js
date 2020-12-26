@@ -7,8 +7,8 @@ router.use(express.json())
 const { checklist } = require('../models')
 const { todolist } = require("../models")
 
-router.get("/", async (req, res)=>{
-    let data = await checklist.findAll({ include:[todolist] }).catch((err)=>res.send(err))
+router.get("/:id", async (req, res)=>{
+    let data = await checklist.findAll({where:{checklist_ID : req.params.id}, include:[todolist] }).catch((err)=>res.send(err))
     res.send(data)
 })
 

@@ -8,8 +8,11 @@ const { user } = require('../models')
 const { todolist } = require('../models')
 const { team } = require('../models')
 
-router.get("/", async (req, res)=>{
-    let data = await user.findAll({ include:[todolist, team] }).catch((err)=>res.send(err))
+router.get("/:id", async (req, res)=>{
+    let data = await user.findAll({
+        where:{ user_ID: req.params.id},
+        include:[todolist, team]
+    }).catch((err)=>res.send(err))
     res.send(data)
 })
 
