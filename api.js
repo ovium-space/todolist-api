@@ -25,7 +25,7 @@ const api = express()
 api.use(express.json())
 
 //PATH
-api.use("/api/v1/todolist", authenticator, todoAPI)
+api.use("/api/v1/todolist", todoAPI)
 api.use("/api/v1/checklist", checklistAPI)
 api.use("/api/v1/user", userAPI)
 api.use("/api/v1/team", teamAPI)

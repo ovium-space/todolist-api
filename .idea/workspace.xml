@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3263ed0-4ccf-4479-8496-f728e7aea5b2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiRoutes/authenticate.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/authenticate.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apiRoutes/checklist.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/checklist.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apiRoutes/team.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/team.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apiRoutes/team_checklist.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/team_checklist.js" afterDir="false" />
@@ -50,10 +51,22 @@
       <workItem from="1608627597321" duration="2628000" />
       <workItem from="1608901329278" duration="2331000" />
       <workItem from="1608987079608" duration="929000" />
+      <workItem from="1609073823284" duration="2472000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

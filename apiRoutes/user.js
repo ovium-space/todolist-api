@@ -1,5 +1,6 @@
 const express = require("express")
 const router = express.Router()
+const authenticator = require('../authenticator')
 
 router.use(express.json())
 
@@ -8,7 +9,7 @@ const { user } = require('../models')
 const { todolist } = require('../models')
 const { team } = require('../models')
 
-router.get("/:id", async (req, res)=>{
+router.get("/:id", authenticator, async (req, res)=>{
     let data = await user.findAll({
         where:{ user_ID: req.params.id},
         include:[todolist, team]
@@ -30,13 +31,13 @@ router.post("/add", async (req, res)=>{
     res.send(data)
 })
 
-router.patch("/update/:id", async (req, res)=>{
+router.patch("/update/:id", authenticator, async (req, res)=>{
     let userID = req.params.id
     let data = await user.update(req.body, {where:{ user_ID: userID }}).catch((err)=>res.send(err))
     res.send(data)
 })
 
-router.delete("/delete/:id", async (req, res)=>{
+router.delete("/delete/:id", authenticator, async (req, res)=>{
     let userID = req.params.id
     let data =  await user.findOne({where: {user_ID: userID}}).then((result) => {
         return user.destroy({where:{user_ID: userID}}).then(() => {return result})

@@ -1,5 +1,6 @@
 const express = require("express")
 const router = express.Router()
+const authenticator = require('../authenticator')
 
 router.use(express.json())
 
@@ -7,7 +8,7 @@ router.use(express.json())
 const { team } = require('../models')
 const { user } = require("../models")
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", authenticator, async (req, res) => {
     let data = await team.findAll({
         where:{ team_ID: req.params.id},
         include:[{
@@ -34,7 +35,7 @@ router.post("/add", async (req, res) => {
     res.send(data)
 })
 
-router.patch("/update/:id", async (req,res)=>{
+router.patch("/update/:id", authenticator, async (req,res)=>{
     let teamID = req.params.id
     let data = await team.update(req.body, {where:{team_ID: teamID}}).catch(err=>{
         console.log(err)
@@ -57,7 +58,7 @@ router.patch("/user/add/:id", async (req, res) => {
     res.sendStatus(200)
 })
 
-router.patch("/user/delete/:id", async (req, res) => {
+router.patch("/user/delete/:id", authenticator, async (req, res) => {
     let teamID = req.params.id
     let userlist = req.body.userlist
 
@@ -71,7 +72,7 @@ router.patch("/user/delete/:id", async (req, res) => {
     res.sendStatus(200)
 })
 
-router.delete("/delete/:id", async (req, res)=>{
+router.delete("/delete/:id", authenticator, async (req, res)=>{
     let teamID = req.params.id
     let data =  await team.findOne({where: {team_ID: teamID}}).then((result) => {
         return team.destroy({where:{team_ID: teamID}}).then(() => {return result})
