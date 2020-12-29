@@ -22,7 +22,11 @@ router.post("/add", async (req, res)=>{
     }).catch((err)=>{
         console.log(err)
         res.sendStatus(400)
+        return "Error"
     })
+
+    //Check if catch error then return false
+    if(data == "Error") return false
 
     //Added association with assign value upon created
     let userlist = req.body.userlist

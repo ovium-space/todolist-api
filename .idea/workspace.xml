@@ -2,19 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3263ed0-4ccf-4479-8496-f728e7aea5b2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/cipher.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiRoutes/authenticate.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/authenticate.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiRoutes/checklist.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/checklist.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apiRoutes/team.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/team.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apiRoutes/team_checklist.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/team_checklist.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiRoutes/team_todolist.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/team_todolist.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiRoutes/todolist.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/todolist.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiRoutes/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/authenticator.js" beforeDir="false" afterPath="$PROJECT_DIR$/authenticator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/team_todolist.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/team_todolist.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +47,7 @@
       <workItem from="1609073823284" duration="2472000" />
       <workItem from="1609224582347" duration="1360000" />
       <workItem from="1609226721744" duration="10053000" />
+      <workItem from="1609237619795" duration="1083000" />
     </task>
     <servers />
   </component>

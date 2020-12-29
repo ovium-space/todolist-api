@@ -14,7 +14,9 @@ router.get("/:id", authenticator, async (req, res) => {
         where:{ team_ID: req.params.id },
         include:[{
             model: team_todolist,
-            include:[team_checklist]
+            include:[{
+                model: team_checklist
+            }]
         }]
     }).catch(err=>{
         console.log(err)
