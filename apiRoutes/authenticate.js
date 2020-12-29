@@ -20,11 +20,12 @@ router.post("/", async (req, res)=>{
     //Username not exist
     if(findUser==null) return res.sendStatus(404)
 
-    let userData = findUser.dataValues
+    //Get user password
+    let userPassword = findUser.dataValues.password
+    //Get user ID
     let userID = findUser.user_ID
-    let userPassword = userData.password
 
-    //Check password
+    //Check password if match then sign token
     if(userPassword == password){
         let token = jwt.sign({ user_ID: userID}, process.env.SECRET_KEY)
         res.json({accessToken: token})

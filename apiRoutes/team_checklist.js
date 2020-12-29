@@ -1,22 +1,17 @@
 const express = require("express")
 const router = express.Router()
+const authenticator = require('../authenticator')
 
 router.use(express.json())
 
 const { team_todolist } = require("../models")
 const { team_checklist } = require("../models")
 
-router.get("/", async (req, res)=>{
-    let data = await team_checklist.findAll( {include:[team_todolist]}).catch((err)=>{
-        console.log(err)
-        req.sendStatus(400)
-    })
-    res.send(data)
-})
-
-router.get("/:id", async (req, res)=>{
-    let checklistID = req.params.id
-    let data = await team_checklist.findOne( {where:{checklist_ID: checklistID}}).catch((err)=>{
+router.get("/:id", authenticator, async (req, res)=>{
+    let data = await team_checklist.findAll( {
+        where:{ checklist_ID: req.params.id},
+        include:[team_todolist]
+    }).catch((err)=>{
         console.log(err)
         req.sendStatus(400)
     })
@@ -67,7 +62,7 @@ router.post("/add", async (req, res)=>{
     
 })
 
-router.patch("/update/:id", async (req, res)=>{
+router.patch("/update/:id", authenticator, async (req, res)=>{
     //Keep userlist from request body then delete it out of request body
     let userlist = req.body.userlist
     let userlistKey = Object.keys(userlist)
@@ -105,7 +100,7 @@ router.patch("/update/:id", async (req, res)=>{
     res.send(data)
 })
 
-router.delete("/delete/:id", async (req, res)=>{
+router.delete("/delete/:id", authenticator, async (req, res)=>{
     let checklistID = req.params.id
     let data =  await team_checklist.findOne({where: {checklist_ID: checklistID}}).then((result) => {
         return team_checklist.destroy({where:{checklist_ID: checklistID}}).then(() => {return result})

@@ -25,13 +25,13 @@ const api = express()
 api.use(express.json())
 
 //PATH
-api.use("/api/v1/todolist", authenticator, todoAPI)
-api.use("/api/v1/checklist", authenticator, checklistAPI)
-api.use("/api/v1/user", authenticator, userAPI)
-api.use("/api/v1/team", authenticator, teamAPI)
-api.use("/api/v1/team/todolist", authenticator, team_todolist)
+api.use("/api/v1/todolist", todoAPI)
+api.use("/api/v1/checklist", checklistAPI)
+api.use("/api/v1/user", userAPI)
+api.use("/api/v1/team", teamAPI)
+api.use("/api/v1/team/todolist", team_todolist)
 api.use("/login", authenticate)
-api.use("/api/v1/team/checklist", authenticator, team_checklist)
+api.use("/api/v1/team/checklist", team_checklist)
 
 
 //Index

@@ -1,5 +1,6 @@
 const express = require("express")
 const router = express.Router()
+const authenticator = require('../authenticator')
 
 router.use(express.json())
 
@@ -7,8 +8,11 @@ router.use(express.json())
 const { todolist } = require("../models")
 const { checklist } = require("../models")
 
-router.get("/", async (req, res)=>{
-    let data = await todolist.findAll({ include:[checklist] }).catch((err)=>res.send(err))
+router.get("/:id", authenticator, async (req, res)=>{
+    let data = await todolist.findAll({
+        where:{ todolist_ID: req.params.id},
+        include:[checklist]
+    }).catch((err)=>res.send(err))
     res.send(data)
 })
 
@@ -29,13 +33,13 @@ router.post("/add", async(req, res)=>{
     res.send(data)
 })
 
-router.patch("/update/:id", async (req, res)=>{
+router.patch("/update/:id", authenticator, async (req, res)=>{
     let todolistID = req.params.id
     let data = await todolist.update(req.body, {where:{ todolist_ID: todolistID }})
     res.send(data)
 })
 
-router.delete("/delete/:id", async (req, res)=>{
+router.delete("/delete/:id", authenticator, async (req, res)=>{
     let todolistID = req.params.id
     let data = await todolist.findOne({where:{ todolist_ID: todolistID }}).then((result)=>{
         return todolist.destroy({where:{ todolist_ID: todolistID }}).then(()=>{return result})
