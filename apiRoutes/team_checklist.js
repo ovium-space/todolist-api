@@ -4,19 +4,7 @@ const authenticator = require('../authenticator')
 
 router.use(express.json())
 
-const { team_todolist } = require("../models")
 const { team_checklist } = require("../models")
-
-router.get("/:id", authenticator, async (req, res)=>{
-    let data = await team_checklist.findAll( {
-        where:{ checklist_ID: req.params.id},
-        include:[team_todolist]
-    }).catch((err)=>{
-        console.log(err)
-        req.sendStatus(400)
-    })
-    res.send(data)
-})
 
 router.post("/add", async (req, res)=>{
     //Create data

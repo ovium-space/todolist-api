@@ -1,17 +1,12 @@
 const express = require("express")
 const router = express.Router()
 const authenticator = require('../authenticator')
+const { Op } = require("sequelize");
 
 router.use(express.json())
 
 //Model
 const { checklist } = require('../models')
-const { todolist } = require("../models")
-
-router.get("/:id", authenticator, async (req, res)=>{
-    let data = await checklist.findAll({where:{checklist_ID : req.params.id}, include:[todolist] }).catch((err)=>res.send(err))
-    res.send(data)
-})
 
 router.post("/add", async (req, res)=>{
     let size = await checklist.count()
