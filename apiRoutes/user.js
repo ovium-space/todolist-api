@@ -47,13 +47,13 @@ router.patch("/update/:id", async (req, res)=>{
     if(isNaN(userID)) return res.status(400).send("ID should be number.")
 
     //Search data from given ID
-    let isFound = await userID.findOne({where:{user_ID: userID}}).catch(err=>{
+    let isFound = await user.findOne({where:{user_ID: userID}}).catch(err=>{
         console.log(err)
         return res.sendStatus(500)
     })
 
     //If don't exist then return 404
-    if (isFound == null) return res.status(404).send("Todolist not found.")
+    if (isFound == null) return res.status(404).send("User not found.")
 
     //Update data to database
     let data = await user.update(req.body, {where:{ user_ID: userID }}).catch((err)=> {
@@ -76,7 +76,7 @@ router.delete("/delete/:id", async (req, res)=>{
     })
 
     //Check if id is found or not
-    if (data == null) return res.status(404).send("Todolist not found.")
+    if (data == null) return res.status(404).send("User not found.")
 
     res.send(data)
 })

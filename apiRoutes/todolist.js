@@ -46,7 +46,7 @@ router.patch("/update/:id", async (req, res)=>{
     if(isNaN(todolistID)) return res.status(400).send("ID should be number.")
 
     //Search data given from ID
-    let isFound = await todolistID.findOne({where:{todolist_ID: todolistID}}).catch(err=>{
+    let isFound = await todolist.findOne({where:{todolist_ID: todolistID}}).catch(err=>{
         console.log(err)
         return res.sendStatus(500)
     })

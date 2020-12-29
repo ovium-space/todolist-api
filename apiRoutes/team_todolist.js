@@ -23,10 +23,14 @@ router.get("/:id", async (req, res) => {
     if(isNaN(todolistID)) return res.status(400).send("ID should be number.")
 
     //Find one with match ID
-    let data = await team_todolist.findAll({where:{todolist_ID: todolistID}}).catch((err)=>{
+    let data = await team_todolist.findOne({where:{todolist_ID: todolistID}}).catch((err)=>{
         console.log(err)
         res.status(500).send("Data corrupted.")
     })
+
+    //Check if id is found or not
+    if(data == null) return res.status(404).send("Todolist not found.")
+
     res.status(200).send(data)
 })
 
@@ -59,7 +63,7 @@ router.patch("/update/:id", async (req, res) => {
     if(isNaN(todolistID)) return res.status(400).send("ID should be number.")
 
     //Search for data from given ID
-    let isFound = await todolistID.findOne({where:{todolist_ID: todolistID}}).catch(err=>{
+    let isFound = await team_todolist.findOne({where:{todolist_ID: todolistID}}).catch(err=>{
         console.log(err)
         return res.sendStatus(500)
     })

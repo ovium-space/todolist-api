@@ -31,6 +31,7 @@ router.get("/:id", async (req, res)=>{
     //Check if id is Integer or not
     if(isNaN(checklistID)) return res.status(400).send("ID should be number.")
 
+
     //Search for checklist from ID given with users assigned
     let data = await team_checklist.findOne({
         where:{
@@ -52,6 +53,9 @@ router.get("/:id", async (req, res)=>{
         console.log(err)
         return req.status(500).send("Data corrupted.")
     })
+
+    //Check if id is found or not
+    if(data == null) return res.status(404).send("Checklist not found.")
 
     res.status(200).send(data)
 })
@@ -98,12 +102,6 @@ router.post("/add", async (req, res)=>{
     if(isError1 || isError2) return res.status(400).send("Invalid userlist.")
 
     res.status(201).send(data)
-})
-
-router.patch("/bruh", async(req, res) => {
-    let data = await team_checklist.findOne({where:{checklist_ID: req.body.checklist_ID}})
-    await data.addUsers(["0", "1"], {through:{assign: false}}).catch(err => console.log(err))
-    res.sendStatus(200)
 })
 
 router.patch("/update/:id", async (req, res)=>{

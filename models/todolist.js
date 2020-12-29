@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         user_ID:{
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false
         },
         name: {
             type: DataTypes.STRING,
@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
 
     todolist.associate = models => {
         todolist.hasMany(models.checklist, { foreignKey: "todolist_ID"})
-        todolist.belongsTo(models.user, {foreignKey: "user_ID"})
+        todolist.belongsTo(models.user, {foreignKey: "user_ID", onDelete:"cascade"})
     }
     return todolist
 }
