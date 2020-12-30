@@ -3,6 +3,8 @@ require('dotenv').config()
 const express = require('express')
 const jwt = require('jsonwebtoken')
 const authenticator = require('./authenticator')
+const cron = require('node-cron')
+const mailer = require('./mailer')
 
 
 //Rounters
@@ -57,3 +59,10 @@ api.listen(port, ()=>{
     console.log(`Listen on port: ${port}`)
 })
 
+//schedule email
+cron.schedule('0 8 * * *', () => {
+}, {
+    timezone: "Asia/Bangkok"
+})
+
+mailer.checkTodolist()
