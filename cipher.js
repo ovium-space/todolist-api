@@ -1,12 +1,11 @@
 const crypto = require('crypto')
 
 const algorithm = 'aes-256-ctr'
-const secretKey = 'D7ZygA+b0UpvuIIX7VL4TUmx5oz0PN0m'
 const iv = crypto.randomBytes(16)
 
 const encrypt = (text) => {
 
-    const cipher = crypto.createCipheriv(algorithm, secretKey, iv)
+    const cipher = crypto.createCipheriv(algorithm, process.env.HASHED_KEY, iv)
 
     const encrypted = Buffer.concat([cipher.update(text), cipher.final()])
 
@@ -18,11 +17,11 @@ const encrypt = (text) => {
 
 const decrypt = (hash) => {
 
-    const decipher = crypto.createDecipheriv(algorithm, secretKey, Buffer.from(hash.iv, 'hex'))
+    const decipher = crypto.createDecipheriv(algorithm, process.env.HASHED_KEY, Buffer.from(hash.iv, 'hex'))
 
-    const decrpyted = Buffer.concat([decipher.update(Buffer.from(hash.content, 'hex')), decipher.final()])
+    const decrypted = Buffer.concat([decipher.update(Buffer.from(hash.content, 'hex')), decipher.final()])
 
-    return decrpyted.toString()
+    return decrypted.toString()
 }
 
 module.exports = {
