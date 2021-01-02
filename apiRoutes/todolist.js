@@ -8,14 +8,6 @@ router.use(express.json())
 const { todolist } = require("../models")
 const { checklist } = require("../models")
 
-router.get("/:id", authenticator, async (req, res)=>{
-    let data = await todolist.findAll({
-        where:{ todolist_ID: req.params.id},
-        include:[checklist]
-    }).catch((err)=>res.send(err))
-    res.send(data)
-})
-
 router.post("/add", async(req, res)=>{
     let size = await todolist.count()
     let data = await todolist.create({

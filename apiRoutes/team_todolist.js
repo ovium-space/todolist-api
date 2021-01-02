@@ -6,18 +6,6 @@ router.use(express.json())
 
 //Model
 const { team_todolist } = require("../models")
-const { team } = require("../models")
-
-router.get("/:id", authenticator, async (req, res) => {
-    let data = await team_todolist.findAll({
-        where:{ todolist_ID: req.params.id},
-        include:[team]
-    }).catch((err)=>{
-        console.log(err)
-        res.sendStatus(400)
-    })
-    res.send(data)
-})
 
 router.post("/add", async (req, res) => {
     let size = await team_todolist.count()
