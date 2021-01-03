@@ -24,6 +24,10 @@ module.exports = (sequelize, Datatype) => {
         password:{
             type: Datatype.STRING,
             allowNull: false
+        },
+        image:{
+            type: Datatype.BLOB('long'),
+            allowNull: true
         }
 
     }, { freezeTableName:true, timestamps:false})

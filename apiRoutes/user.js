@@ -17,7 +17,7 @@ router.get("/:id", authenticator, async (req, res)=>{
     res.send(data)
 })
 
-router.post("/add", async (req, res)=>{
+router.post("/add" ,async (req, res)=>{
     let data = await user.create({
         user_ID: req.body.user_ID,
         firstname: req.body.firstname,

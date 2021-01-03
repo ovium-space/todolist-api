@@ -2,17 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f3263ed0-4ccf-4479-8496-f728e7aea5b2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/apiRoutes/imageUploader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiRoutes/checklist.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/checklist.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiRoutes/team.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/team.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiRoutes/team_checklist.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/team_checklist.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiRoutes/team_todolist.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/team_todolist.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apiRoutes/todolist.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/todolist.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apiRoutes/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/authenticator.js" beforeDir="false" afterPath="$PROJECT_DIR$/authenticator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +32,11 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\USER\Desktop\62070083\Project\API\todolist-api\apiRoutes" />
+    </key>
+  </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="nodemon" />
@@ -52,6 +54,7 @@
       <workItem from="1608901329278" duration="2331000" />
       <workItem from="1608987079608" duration="929000" />
       <workItem from="1609073823284" duration="2472000" />
+      <workItem from="1609672419842" duration="5727000" />
     </task>
     <servers />
   </component>
@@ -68,5 +71,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
