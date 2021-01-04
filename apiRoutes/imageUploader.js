@@ -21,9 +21,12 @@ router.get("/uploadImage", authenticator, async (req, res)=>{
         }
     })
 
+    //Declare multer function
     let upload = multer({storage}).single('imageFile')
 
+    //Image uploading function
     upload(req, res, (err)=>{
+        //If any error
         if(err){
             console.log(err)
             return true
@@ -37,16 +40,33 @@ router.get("/uploadImage", authenticator, async (req, res)=>{
                 return "error"
             }
 
+            //Update current image upload to user's data
             let imageJSON = { image: data }
             let updateData = user.update(imageJSON, {where:{user_ID: user_ID}}).catch(err => {
                 console.log(err)
                 return "error"
             })
-            if(updateData == "error") return res.sendStatus(500)
 
+            //Remove current file out of folder since it has been uploaded to mySQL as BLOB
+            let removeFile = fs.unlink('./images/' + req.file.filename, (err) => {
+                if(err){
+                    console.log(err)
+                    return "error"
+                }
+            })
 
+            //Check if any error from update and remove file process
+            if(updateData == "error" || removeFile == "error") return res.sendStatus(500)
+
+            //OK if nothing wrong
             res.status(200).send("Upload success!")
-        })
+        }) || false
+
+        //If multer upload function is error
+        if(data){
+            console.log(err)
+            res.status(500)
+        }
     })
 
 
