@@ -2,12 +2,19 @@ const express = require('express')
 const multer = require('multer')
 const authenticator = require('../authenticator')
 const fs = require('fs')
+const path = require('path')
+const AWS = require("aws-sdk")
 
 const router = express.Router()
 
 router.use(express.json())
 
 let { user } = require("../models")
+
+const s3 = new AWS.S3({
+    accessKeyId: process.env.AWS_ID,
+    secretAccessKey: process.env.AWS_SECRET
+})
 
 router.get("/uploadImage", authenticator, async (req, res)=>{
     let user_ID = req.body.tokenUserID
@@ -40,11 +47,29 @@ router.get("/uploadImage", authenticator, async (req, res)=>{
                 return "error"
             }
 
-            //Update current image upload to user's data
-            let imageJSON = { image: data }
-            let updateData = user.update(imageJSON, {where:{user_ID: user_ID}}).catch(err => {
-                console.log(err)
-                return "error"
+            let fileType = req.file.filename.split(".")[1]
+            let params = {
+                Bucket: process.env.AWS_BUCKET_NAME,
+                Key: user_ID + "." + fileType,
+                Body: data
+            }
+
+            let s3Error = s3.upload(params, async (err, data)=>{
+                if(err){
+                    console.log(err)
+                    return "error"
+                }
+                else {
+                    //Update current image URL to user's data
+                    let imageJSON = { image: data.Location }
+                    let updateData = await user.update(imageJSON, {where:{user_ID: user_ID}}).catch(err => {
+                        console.log(err)
+                        return "error"
+                    })
+
+                    if(updateData == "error") return "error"
+                }
+
             })
 
             //Remove current file out of folder since it has been uploaded to mySQL as BLOB
@@ -56,7 +81,7 @@ router.get("/uploadImage", authenticator, async (req, res)=>{
             })
 
             //Check if any error from update and remove file process
-            if(updateData == "error" || removeFile == "error") return res.sendStatus(500)
+            if(s3Error == "error" || removeFile == "error") return res.sendStatus(500)
 
             //OK if nothing wrong
             res.status(200).send("Upload success!")
