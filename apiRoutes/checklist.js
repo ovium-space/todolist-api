@@ -1,21 +1,12 @@
 const express = require("express")
 const router = express.Router()
+const authenticator = require('../authenticator')
+const { Op } = require("sequelize");
 
 router.use(express.json())
 
 //Model
 const { checklist } = require('../models')
-const { todolist } = require("../models")
-
-router.get("/", async (req, res)=>{
-    //Find all checklist with it todolist
-    let data = await checklist.findAll({ include:[todolist] }).catch((err)=> {
-        console.log(err)
-        return res.status(500).send("Data corrupted.")
-    })
-
-    res.status(200).send(data)
-})
 
 router.post("/add", async (req, res)=>{
     //Get size to calc index of data
@@ -39,7 +30,7 @@ router.post("/add", async (req, res)=>{
     res.status(201).send(data)
 })
 
-router.patch("/update/:id", async (req, res)=>{
+router.patch("/update/:id", authenticator, async (req, res)=>{
     let checklistID = req.params.id
 
     //Check if ID is Integer or not
@@ -63,7 +54,7 @@ router.patch("/update/:id", async (req, res)=>{
     res.status(200).send(data)
 })
 
-router.delete("/delete/:id", async (req, res)=>{
+router.delete("/delete/:id", authenticator, async (req, res)=>{
     let checklistID = req.params.id
 
     //Check if id is Integer or not

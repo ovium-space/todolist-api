@@ -1,21 +1,12 @@
 const express = require("express")
 const router = express.Router()
+const authenticator = require('../authenticator')
 
 router.use(express.json())
 
 //Model
 const { todolist } = require("../models")
 const { checklist } = require("../models")
-
-router.get("/", async (req, res)=>{
-    //Search all todolist with it checklist
-    let data = await todolist.findAll({ include:[checklist] }).catch((err)=> {
-        console.log(err)
-        return res.status(500).send("Data corrupted.")
-    })
-
-    res.status(200).send(data)
-})
 
 router.post("/add", async(req, res)=>{
     //Count data for index
@@ -39,7 +30,7 @@ router.post("/add", async(req, res)=>{
     res.status(201).send(data)
 })
 
-router.patch("/update/:id", async (req, res)=>{
+router.patch("/update/:id", authenticator, async (req, res)=>{
     let todolistID = req.params.id
 
     //Check if id is Integer or not
@@ -63,7 +54,7 @@ router.patch("/update/:id", async (req, res)=>{
     res.status(200).send(data)
 })
 
-router.delete("/delete/:id", async (req, res)=>{
+router.delete("/delete/:id", authenticator, async (req, res)=>{
     let todolistID = req.params.id
 
     //Check if id is Integer or not

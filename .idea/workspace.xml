@@ -12,6 +12,8 @@
       <change beforePath="$PROJECT_DIR$/apiRoutes/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/user.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/team.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/team.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cipher.js" beforeDir="false" afterPath="$PROJECT_DIR$/cipher.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +32,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../.." />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -49,10 +51,32 @@
       <updated>1608627595094</updated>
       <workItem from="1608627597321" duration="2628000" />
       <workItem from="1608799345285" duration="8523000" />
+      <workItem from="1608901329278" duration="2331000" />
+      <workItem from="1608987079608" duration="929000" />
+      <workItem from="1609073823284" duration="2472000" />
+      <workItem from="1609224582347" duration="1360000" />
+      <workItem from="1609226721744" duration="10053000" />
+      <workItem from="1609237619795" duration="1083000" />
+      <workItem from="1609316891082" duration="21000" />
+      <workItem from="1609331700742" duration="9000" />
+      <workItem from="1609331791164" duration="9000" />
+      <workItem from="1609509012991" duration="3462000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

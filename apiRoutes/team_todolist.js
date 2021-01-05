@@ -1,38 +1,11 @@
 const express = require("express")
 const router = express.Router()
+const authenticator = require('../authenticator')
 
 router.use(express.json())
 
 //Model
 const { team_todolist } = require("../models")
-const { team } = require("../models")
-
-router.get("/", async (req, res) => {
-    //Find all todolist with it team
-    let data = await team_todolist.findAll({include:[team]}).catch((err)=>{
-        console.log(err)
-        res.status(500).send("Data corrupted.")
-    })
-
-    res.status(200).send(data)
-})
-
-router.get("/:id", async (req, res) => {
-    let todolistID = req.params.id
-    //Check if id is Integer or not
-    if(isNaN(todolistID)) return res.status(400).send("ID should be number.")
-
-    //Find one with match ID
-    let data = await team_todolist.findOne({where:{todolist_ID: todolistID}}).catch((err)=>{
-        console.log(err)
-        res.status(500).send("Data corrupted.")
-    })
-
-    //Check if id is found or not
-    if(data == null) return res.status(404).send("Todolist not found.")
-
-    res.status(200).send(data)
-})
 
 router.post("/add", async (req, res) => {
     //Count data for index
@@ -56,7 +29,7 @@ router.post("/add", async (req, res) => {
     res.status(201).send(data)
 })
 
-router.patch("/update/:id", async (req, res) => {
+router.patch("/update/:id", authenticator, async (req, res) => {
     let todolistID = req.params.id
 
     //Check if id is Integer or not
@@ -81,7 +54,7 @@ router.patch("/update/:id", async (req, res) => {
     res.status(200).send(data)
 })
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", authenticator, async (req, res) => {
     let todolistID = req.params.id
 
     //Check if id is Integer or not

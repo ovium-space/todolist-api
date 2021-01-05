@@ -1,20 +1,22 @@
 const express = require("express")
 const router = express.Router()
+const authenticator = require('../authenticator')
 
 router.use(express.json())
 
 //Model
 const { team } = require('../models')
-const { user } = require("../models")
+const { team_todolist } = require("../models")
+const { team_checklist } = require("../models")
 
-router.get("/", async (req, res) => {
-    //Find all data with users in team
-    let data = await team.findAll({
+router.get("/:id", authenticator, async (req, res) => {
+    let data = await team.findOne({
+        where:{ team_ID: req.params.id },
         include:[{
-            model: user,
-            as: "with",
-            through:{attributes:[]},
-            attributes:{exclude:["password"]}
+            model: team_todolist,
+            include:[{
+                model: team_checklist
+            }]
         }]
     }).catch(err=>{
         console.log(err)
@@ -36,12 +38,11 @@ router.post("/add", async (req, res) => {
     })
 
     //Add leader to his own team
-    data.addWith(req.body.leader_ID)
-
+    data.addUser(req.body.leader_ID)
     res.status(201).send(data)
 })
 
-router.patch("/update/:id", async (req,res)=>{
+router.patch("/update/:id", authenticator, async (req,res)=>{
     let teamID = req.params.id
 
     //Check if id is Integer or not
@@ -90,7 +91,7 @@ router.patch("/user/add/:id", async (req, res) => {
     res.status(200).send(teamData)
 })
 
-router.patch("/user/delete/:id", async (req, res) => {
+router.patch("/user/delete/:id", authenticator, async (req, res) => {
     let teamID = req.params.id
     let userlist = req.body.userlist
 
@@ -112,7 +113,7 @@ router.patch("/user/delete/:id", async (req, res) => {
     res.status(200).send(teamData)
 })
 
-router.delete("/delete/:id", async (req, res)=>{
+router.delete("/delete/:id", authenticator, async (req, res)=>{
     let teamID = req.params.id
     //Check if id is Integer or not
     if(isNaN(teamID)) return res.status(400).send("ID should be number.")

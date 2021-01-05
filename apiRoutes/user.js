@@ -1,38 +1,48 @@
 const express = require("express")
 const router = express.Router()
+const authenticator = require('../authenticator')
+const cipher = require("../cipher")
 
 router.use(express.json())
 
 //Model
 const { user } = require('../models')
 const { todolist } = require('../models')
+const { checklist } = require("../models")
 const { team } = require('../models')
 
-router.get("/", async (req, res)=>{
-    //Search all team with all users in team
-    let data = await user.findAll({
+router.get("/:id", authenticator, async (req, res)=>{
+    let data = await user.findOne({
+        where:{ user_ID: req.params.id},
+        attributes: {exclude: ["password"]},
         include:[{
+            model: todolist,
+            include:[checklist]
+        }, {
             model: team,
-            as: "with",
-            through:{attributes:[]}
-        }, todolist]
-    }).catch((err)=> {
+            as: "with"
+        }]
+    }).catch((err)=>{
         console.log(err)
-        return res.status(500).send("Data corrupted.")
+        res.sendStatus(500)
+        return "Error"
     })
 
-    res.status(200).send(data)
+    if(data == "Error") return false
+
+    res.send(data)
 })
 
 router.post("/add", async (req, res)=>{
-    //Create data from request
+    //Hashing password
+    let hashedPassword = cipher.encrypt(req.body.password)
     let data = await user.create({
         user_ID: req.body.user_ID,
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
         username: req.body.username,
-        password: req.body.password
+        password: hashedPassword
     }).catch((err)=>{
         console.log(err)
         return res.sendStatus(400)
@@ -41,7 +51,7 @@ router.post("/add", async (req, res)=>{
     res.status(201).send(data)
 })
 
-router.patch("/update/:id", async (req, res)=>{
+router.patch("/update/:id", authenticator, async (req, res)=>{
     let userID = req.params.id
     //Check if id is Integer or not
     if(isNaN(userID)) return res.status(400).send("ID should be number.")
@@ -64,7 +74,7 @@ router.patch("/update/:id", async (req, res)=>{
     res.status(200).send(data)
 })
 
-router.delete("/delete/:id", async (req, res)=>{
+router.delete("/delete/:id", authenticator, async (req, res)=>{
     let userID = req.params.id
 
     //Check if id is Integer or not

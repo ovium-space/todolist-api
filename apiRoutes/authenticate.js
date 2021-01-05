@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
+const cipher = require("../cipher")
 
 router.use(express.json())
 
@@ -26,12 +27,13 @@ router.post("/", async (req, res)=>{
         return res.status(404).send("User not found.")
     }
 
-    //Get user data if username exist
-    let userData = findUser.dataValues
-    let userID = findUser.user_ID
-    let userPassword = userData.password
+    //Get user password
+    let userPassword = cipher.decrypt(JSON.parse(findUser.dataValues.password))
 
-    //Check if password match then generate token
+    //Get user ID
+    let userID = findUser.user_ID
+
+    //Check password if match then sign token
     if(userPassword == password){
         let token = jwt.sign({ user_ID: userID}, process.env.SECRET_KEY)
         res.status(200).json({accessToken: token})

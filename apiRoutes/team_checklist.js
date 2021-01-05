@@ -1,64 +1,10 @@
 const express = require("express")
 const router = express.Router()
+const authenticator = require('../authenticator')
 
 router.use(express.json())
 
-const { user } = require("../models")
 const { team_checklist } = require("../models")
-
-router.get("/", async (req, res)=>{
-    //Search for all teamChecklist with all user assigned
-    let data = await team_checklist.findAll( {
-        include:[{
-            model: user,
-            through:{
-                where:{assign: 1},
-                attributes:[]
-            },
-            attributes:{exclude:["password"]}
-        }]
-    }).catch((err)=>{
-        console.log(err)
-        return req.status(500).send("Data corrupted.")
-    })
-
-    res.status(200).send(data)
-})
-
-router.get("/:id", async (req, res)=>{
-    let checklistID = req.params.id
-
-    //Check if id is Integer or not
-    if(isNaN(checklistID)) return res.status(400).send("ID should be number.")
-
-
-    //Search for checklist from ID given with users assigned
-    let data = await team_checklist.findOne({
-        where:{
-            checklist_ID: checklistID
-        },
-        include:[{
-            model: user,
-            through:{
-                where:{
-                    assign: 1
-                },
-                attributes:[]
-            },
-            attributes:{
-                exclude:["password"]
-            }
-        }]
-    }).catch((err)=>{
-        console.log(err)
-        return req.status(500).send("Data corrupted.")
-    })
-
-    //Check if id is found or not
-    if(data == null) return res.status(404).send("Checklist not found.")
-
-    res.status(200).send(data)
-})
 
 router.post("/add", async (req, res)=>{
     //Create data
@@ -75,8 +21,12 @@ router.post("/add", async (req, res)=>{
         checklist_check: req.body.checklist_check
     }).catch((err)=>{
         console.log(err)
-        return res.sendStatus(400)
+        res.sendStatus(400)
+        return "Error"
     })
+
+    //Check if catch error then return false
+    if(data == "Error") return false
 
     //Added association with assign value upon created
     let userlist = req.body.userlist || {}
@@ -104,7 +54,7 @@ router.post("/add", async (req, res)=>{
     res.status(201).send(data)
 })
 
-router.patch("/update/:id", async (req, res)=>{
+router.patch("/update/:id", authenticator, async (req, res)=>{
     //Keep userlist from request body then delete it out of request body
     let userlist = req.body.userlist || {}
     let userlistKey = Object.keys(userlist)
@@ -153,7 +103,7 @@ router.patch("/update/:id", async (req, res)=>{
     res.status(200).send(data)
 })
 
-router.delete("/delete/:id", async (req, res)=>{
+router.delete("/delete/:id", authenticator, async (req, res)=>{
     let checklistID = req.params.id
 
     //Check if id is Integer or not
