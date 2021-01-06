@@ -24,6 +24,10 @@ module.exports = (sequelize, Datatype) => {
         password:{
             type: Datatype.JSON,
             allowNull: false
+        },
+        image:{
+            type: Datatype.STRING,
+            allowNull: true
         }
 
     }, { freezeTableName:true, timestamps:false})

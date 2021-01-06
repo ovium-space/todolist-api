@@ -4,7 +4,6 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const authenticator = require('./authenticator')
 
-
 //Rounters
 const todoAPI = require("./apiRoutes/todolist")
 const checklistAPI = require("./apiRoutes/checklist")
@@ -13,6 +12,7 @@ const teamAPI = require("./apiRoutes/team")
 const team_todolist = require("./apiRoutes/team_todolist")
 const authenticate = require("./apiRoutes/authenticate")
 const team_checklist = require("./apiRoutes/team_checklist")
+const imageUploader = require("./apiRoutes/imageUploader")
 
 //Database
 const db = require('./models')
@@ -32,10 +32,10 @@ api.use("/api/v1/team", teamAPI)
 api.use("/api/v1/team/todolist", team_todolist)
 api.use("/login", authenticate)
 api.use("/api/v1/team/checklist", team_checklist)
-
+api.use("/api/v1/", imageUploader)
 
 //Index
-api.get("/", (req, res)=>{
+api.get("/", authenticator, (req, res)=>{
     res.sendStatus(200)
 })
 

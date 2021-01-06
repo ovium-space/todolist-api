@@ -57,6 +57,5 @@ module.exports = async function (req, res, next){
 
     //Process to the requested path
     next()
-    
-}
 
+}

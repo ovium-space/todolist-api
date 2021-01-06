@@ -4,6 +4,10 @@
     <list default="true" id="f3263ed0-4ccf-4479-8496-f728e7aea5b2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apiRoutes/imageUploader.js" beforeDir="false" afterPath="$PROJECT_DIR$/apiRoutes/imageUploader.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/user.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cipher.js" beforeDir="false" afterPath="$PROJECT_DIR$/cipher.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -27,6 +31,11 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\USER\Desktop\62070083\Project\API\todolist-api\apiRoutes" />
+    </key>
+  </component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="nodemon" />
@@ -44,6 +53,9 @@
       <workItem from="1608901329278" duration="2331000" />
       <workItem from="1608987079608" duration="929000" />
       <workItem from="1609073823284" duration="2472000" />
+      <workItem from="1609672419842" duration="6402000" />
+      <workItem from="1609744361835" duration="1439000" />
+      <workItem from="1609815451430" duration="4571000" />
       <workItem from="1609224582347" duration="1360000" />
       <workItem from="1609226721744" duration="10053000" />
       <workItem from="1609237619795" duration="1083000" />
