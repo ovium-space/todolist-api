@@ -36,7 +36,6 @@ api.use("/api/v1/", imageUploader)
 
 //Index
 api.get("/", authenticator, (req, res)=>{
-    console.log(req.file)
     res.sendStatus(200)
 })
 
