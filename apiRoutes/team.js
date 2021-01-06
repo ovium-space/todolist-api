@@ -6,14 +6,17 @@ router.use(express.json())
 
 //Model
 const { team } = require('../models')
-const { user } = require("../models")
+const { team_todolist } = require("../models")
+const { team_checklist } = require("../models")
 
 router.get("/:id", authenticator, async (req, res) => {
-    let data = await team.findAll({
-        where:{ team_ID: req.params.id},
+    let data = await team.findOne({
+        where:{ team_ID: req.params.id },
         include:[{
-            model: user,
-            through: { attributes:[] }
+            model: team_todolist,
+            include:[{
+                model: team_checklist
+            }]
         }]
     }).catch(err=>{
         console.log(err)
@@ -31,6 +34,7 @@ router.post("/add", async (req, res) => {
         console.log(err)
         res.sendStatus(400)
     })
+
     data.addUser(req.body.leader_ID)
     res.send(data)
 })

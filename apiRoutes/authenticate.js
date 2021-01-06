@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const jwt = require('jsonwebtoken')
+const cipher = require("../cipher")
 
 router.use(express.json())
 
@@ -21,7 +22,8 @@ router.post("/", async (req, res)=>{
     if(findUser==null) return res.sendStatus(404)
 
     //Get user password
-    let userPassword = findUser.dataValues.password
+    let userPassword = cipher.decrypt(JSON.parse(findUser.dataValues.password))
+
     //Get user ID
     let userID = findUser.user_ID
 

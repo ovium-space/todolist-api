@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
 
     team_todolist.associate = models => {
         team_todolist.belongsTo(models.team, {foreignKey:"team_ID"})
-        team_todolist.hasMany(models.team_checklist, {foreignKey:"checklist_ID"})
+        team_todolist.hasMany(models.team_checklist, {foreignKey:"todolist_ID"})
     }
 
     return team_todolist
