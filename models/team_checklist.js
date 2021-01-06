@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes)=>{
         }
     }, {freezeTableName:true, timestamps:false})
     team_checklist.associate = models =>{
-        team_checklist.belongsTo(models.team_todolist, {foreignKey:"todolist_ID"})
+        team_checklist.belongsTo(models.team_todolist, {foreignKey:"todolist_ID", onDelete:"cascade"})
         team_checklist.belongsToMany(models.user, {through:'Tchecklist_user', foreignKey:"checklist_ID"})
     }
 

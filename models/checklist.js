@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes)=>{
     }, { freezeTableName: true, timestamps : false})
 
     checklist.associate = models => {
-        checklist.belongsTo(models.todolist, { foreignKey: "todolist_ID"})
+        checklist.belongsTo(models.todolist, { foreignKey: "todolist_ID", onDelete:"cascade"})
     }
     return checklist
 }

@@ -30,7 +30,7 @@ module.exports = (sequelize, Datatype) => {
             allowNull: true
         }
 
-    }, { freezeTableName:true, timestamps:false})
+    }, { freezeTableName:true, timestamps:false, tableName:"user"})
 
     user.associate = models => {
         user.hasMany(models.todolist, {foreignKey: "user_ID"})

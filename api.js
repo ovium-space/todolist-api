@@ -40,7 +40,7 @@ api.get("/", authenticator, (req, res)=>{
 })
 
 //Debug only!
-api.get("/reset", authenticator, async (req, res)=>{
+api.get("/reset", async (req, res)=>{
     db.sequelize.sync({force: true}).then(()=>{console.log("Database Sync!")}).catch(err=>console.log(err))
     res.sendStatus(200)
 })
