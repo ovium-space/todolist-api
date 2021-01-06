@@ -1,47 +1,57 @@
 const express = require("express")
 const router = express.Router()
-const authenticator = require('../authenticator')
+const authenticator = require("../authenticator")
+const { v4: uuidv4 } = require("uuid")
 
 router.use(express.json())
 
 //Model
-const { checklist } = require('../models')
+const { checklist } = require("../models")
 const { todolist } = require("../models")
 
-router.get("/:id", authenticator, async (req, res)=>{
-    let data = await checklist.findAll({where:{checklist_ID : req.params.id}, include:[todolist] }).catch((err)=>res.send(err))
-    res.send(data)
-})
-
-router.post("/add", async (req, res)=>{
-    let size = await checklist.count()
-    let data = await checklist.create({
-        checklist_ID: req.body.checklist_ID,
-        todolist_ID: req.body.todolist_ID,
-        name: req.body.name,
-        state: req.body.state,
-        checklist_index: size,
-        expire_datetime: req.body.expire_datetime,
-        due_datetime: req.body.due_datetime,
-        checklist_check: req.body.checklist_check
-    }).catch((err)=>{
-        if(err) res.send(err)
+router.get("/:id", authenticator, async (req, res) => {
+  let data = await checklist
+    .findAll({
+      where: { checklist_ID: req.params.id },
+      include: [todolist],
     })
-    res.send(data)
+    .catch((err) => res.send(err))
+  res.send(data)
 })
 
-router.patch("/update/:id", authenticator, async (req, res)=>{
-    let checklistID = req.params.id
-    let data = await checklist.update(req.body, {where:{ checklist_ID: checklistID }})
-    res.send(data)
-})
-
-router.delete("/delete/:id", authenticator, async (req, res)=>{
-    let checklistID = req.params.id
-    let data =  await checklist.findOne({where: {checklist_ID: checklistID}}).then((result) => {
-            return checklist.destroy({where:{checklist_ID: checklistID}}).then(() => {return result})
+router.post("/add", async (req, res) => {
+  let size = await checklist.count()
+  let data = await checklist
+    .create({
+      checklist_ID: uuidv4(),
+      todolist_ID: req.body.todolist_ID,
+      name: req.body.name,
+      state: req.body.state,
+      checklist_index: size,
+      expire_datetime: req.body.expire_datetime,
+      due_datetime: req.body.due_datetime,
+      checklist_check: req.body.checklist_check,
     })
-    res.send(data)
+    .catch((err) => {
+      if (err) res.send(err)
+    })
+  res.send(data)
+})
+
+router.patch("/update/:id", authenticator, async (req, res) => {
+  let checklistID = req.params.id
+  let data = await checklist.update(req.body, { where: { checklist_ID: checklistID } })
+  res.send(data)
+})
+
+router.delete("/delete/:id", authenticator, async (req, res) => {
+  let checklistID = req.params.id
+  let data = await checklist.findOne({ where: { checklist_ID: checklistID } }).then((result) => {
+    return checklist.destroy({ where: { checklist_ID: checklistID } }).then(() => {
+      return result
+    })
+  })
+  res.send(data)
 })
 
 module.exports = router

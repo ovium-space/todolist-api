@@ -1,11 +1,10 @@
-require('dotenv').config()
+require("dotenv").config()
 //Modules
-const express = require('express')
-const jwt = require('jsonwebtoken')
-const authenticator = require('./authenticator')
-const cron = require('node-cron')
-const mailer = require('./mailer')
-
+const express = require("express")
+const jwt = require("jsonwebtoken")
+const authenticator = require("./authenticator")
+const cron = require("node-cron")
+const mailer = require("./mailer")
 
 //Rounters
 const todoAPI = require("./apiRoutes/todolist")
@@ -17,7 +16,7 @@ const authenticate = require("./apiRoutes/authenticate")
 const team_checklist = require("./apiRoutes/team_checklist")
 
 //Database
-const db = require('./models')
+const db = require("./models")
 
 //Set PORT
 const port = process.env.PORT || 3000
@@ -35,34 +34,39 @@ api.use("/api/v1/team/todolist", team_todolist)
 api.use("/login", authenticate)
 api.use("/api/v1/team/checklist", team_checklist)
 
-
 //Index
-api.get("/", (req, res)=>{
-    res.sendStatus(200)
+api.get("/", (req, res) => {
+  res.sendStatus(200)
 })
 
 //Debug only!
-api.get("/reset", authenticator, async (req, res)=>{
-    db.sequelize.sync({force: true}).then(()=>{console.log("Database Sync!")}).catch(err=>console.log(err))
-    res.sendStatus(200)
+api.get("/reset", authenticator, async (req, res) => {
+  db.sequelize
+    .sync({ force: true })
+    .then(() => {
+      console.log("Database Sync!")
+    })
+    .catch((err) => console.log(err))
+  res.sendStatus(200)
 })
 
 //Authenticate database
-db.sequelize.authenticate().then(()=>{
+db.sequelize
+  .authenticate()
+  .then(() => {
     console.log("Connected to database.")
-}).catch((err)=>{
+  })
+  .catch((err) => {
     console.log("Failed to connect to database: \n" + err)
-})
+  })
 
 //Let's API Listen on PORT
-api.listen(port, ()=>{
-    console.log(`Listen on port: ${port}`)
+api.listen(port, () => {
+  console.log(`Listen on port: ${port}`)
 })
 
 //schedule email
-cron.schedule('0 8 * * *', () => {
-}, {
-    timezone: "Asia/Bangkok"
+cron.schedule("0 8 * * *", () => {}, {
+  timezone: "Asia/Bangkok",
 })
-
 mailer.checkTodolist()

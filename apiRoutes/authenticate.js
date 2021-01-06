@@ -1,35 +1,35 @@
-const express = require('express')
+const express = require("express")
 const router = express.Router()
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken")
 
 router.use(express.json())
 
 //Model
-const { user } = require('../models')
+const { user } = require("../models")
 
 //Login
-router.post("/", async (req, res)=>{
-    let username = req.body.username
-    let password = req.body.password
-    if(!username && !password) return res.sendStatus(400)
-    let findUser = await user.findOne({where:{ username: username}}).catch((err)=>{
-        console.log(err)
-        return res.sendStatus(400)
-    })
+router.post("/", async (req, res) => {
+  let username = req.body.username
+  let password = req.body.password
+  if (!username && !password) return res.sendStatus(400)
+  let findUser = await user.findOne({ where: { username: username } }).catch((err) => {
+    console.log(err)
+    return res.sendStatus(400)
+  })
 
-    //Username not exist
-    if(findUser==null) return res.sendStatus(404)
+  //Username not exist
+  if (findUser == null) return res.sendStatus(404)
 
-    //Get user password
-    let userPassword = findUser.dataValues.password
-    //Get user ID
-    let userID = findUser.user_ID
+  //Get user password
+  let userPassword = findUser.dataValues.password
+  //Get user ID
+  let userID = findUser.user_ID
 
-    //Check password if match then sign token
-    if(userPassword == password){
-        let token = jwt.sign({ user_ID: userID}, process.env.SECRET_KEY)
-        res.json({accessToken: token})
-    }else res.status(401).send("Incorrect Password.")
+  //Check password if match then sign token
+  if (userPassword == password) {
+    let token = jwt.sign({ user_ID: userID }, process.env.SECRET_KEY)
+    res.json({ accessToken: token })
+  } else res.status(401).send("Incorrect Password.")
 })
 
 module.exports = router

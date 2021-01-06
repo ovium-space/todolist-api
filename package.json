@@ -16,9 +16,11 @@
     "node-cron": "^2.0.3",
     "nodemailer": "^6.4.17",
     "nodemon": "^2.0.6",
-    "sequelize": "^6.3.5"
+    "sequelize": "^6.3.5",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "prettier": "2.2.1",
     "sequelize-cli": "^6.2.0"
   }
 }
