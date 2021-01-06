@@ -9,8 +9,8 @@ let transporter = mailer.createTransport( {
     secureConnection: true, // use SSL
     port: 465, // port for secure SMTP
     auth: {
-        user: "affter29@gmail.com",
-        pass: "aff292929"
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     }
 })
 //check
@@ -38,7 +38,7 @@ async function checkTodolist(){
 function sendmail(dest, todolist){
     //email
     let mailOptions = {
-        from: 'aff29@gmail.com',
+        from: process.env.EMAIL_USER,
         to: dest,
         subject: 'Todolist do not finish',
         text: todolist.toString()
