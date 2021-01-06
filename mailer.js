@@ -68,10 +68,26 @@ async function checkTodolist() {
         todayChecklist = []
         notDoneChecklist = []
         console.log(content)
-        //sendmail(dest, content)
       }
     }
+    let htmlContent = ""
+    //Assemble htmlContent
+    for (const todolist of content) {
+      htmlContent += "<h4>Todolist: " + todolist["todolist"] + "</h4>" + "Todo Today:<br><ul>"
+      //For list of todayChecklist
+      for (const checklist of todolist["checklist"]) {
+        htmlContent += "<li>" + checklist + "</li>"
+      }
+      htmlContent += "</ul>Expire checklist: <br>" + ""
+      //For list of expireChecklist
+      for (const checklist of todolist["expireChecklist"]) {
+        htmlContent += "<li>" + checklist + "</li>"
+      }
+      htmlContent += "</ul><br><br>"
+    }
+    console.log(htmlContent)
     content = []
+    sendmail(dest, htmlContent)
   }
 }
 
@@ -82,7 +98,7 @@ function sendmail(dest, content) {
     from: process.env.EMAIL_USER,
     to: dest,
     subject: "Todo " + day + "-" + (parseInt(month) + 1) + "-" + year,
-    html: "",
+    html: content,
   }
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) console.log(err)
