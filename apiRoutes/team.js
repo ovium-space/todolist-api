@@ -26,7 +26,7 @@ router.get("/:id", authenticator, async (req, res) => {
     res.status(200).send(data)
 })
 
-router.post("/add", async (req, res) => {
+router.post("/add", authenticator, async (req, res) => {
     //Create data from request
     let data = await team.create({
         team_ID: req.body.team_ID,
@@ -66,7 +66,7 @@ router.patch("/update/:id", authenticator, async (req,res)=>{
     res.status(200).send(data)
 })
 
-router.patch("/user/add/:id", async (req, res) => {
+router.patch("/user/add/:id", authenticator, async (req, res) => {
     let teamID = req.params.id
     let userlist = req.body.userlist
 

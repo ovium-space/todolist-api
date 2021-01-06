@@ -33,7 +33,7 @@ router.get("/:id", authenticator, async (req, res)=>{
     res.send(data)
 })
 
-router.post("/add", async (req, res)=>{
+router.post("/add", authenticator, async (req, res)=>{
     //Hashing password
     let hashedPassword = cipher.encrypt(req.body.password)
     let data = await user.create({

@@ -8,7 +8,7 @@ router.use(express.json())
 //Model
 const { checklist } = require('../models')
 
-router.post("/add", async (req, res)=>{
+router.post("/add", authenticator, async (req, res)=>{
     //Get size to calc index of data
     let size = await checklist.count()
 

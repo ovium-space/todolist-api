@@ -6,7 +6,7 @@ router.use(express.json())
 
 const { team_checklist } = require("../models")
 
-router.post("/add", async (req, res)=>{
+router.post("/add", authenticator, async (req, res)=>{
     //Create data
     let size = await team_checklist.count()
     let data = await team_checklist.create({

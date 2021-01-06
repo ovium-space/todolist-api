@@ -7,7 +7,7 @@ router.use(express.json())
 //Model
 const { team_todolist } = require("../models")
 
-router.post("/add", async (req, res) => {
+router.post("/add", authenticator, async (req, res) => {
     //Count data for index
     let size = await team_todolist.count()
 

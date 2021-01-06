@@ -8,7 +8,7 @@ router.use(express.json())
 const { todolist } = require("../models")
 const { checklist } = require("../models")
 
-router.post("/add", async(req, res)=>{
+router.post("/add", authenticator,async(req, res)=>{
     //Count data for index
     let size = await todolist.count()
 
