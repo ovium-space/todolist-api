@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
-const authenticator = require('../authenticator')
+const authenticator = require("../authenticator")
+const { v4: uuidv4 } = require("uuid")
 
 router.use(express.json())
 
@@ -10,7 +11,7 @@ router.post("/add", authenticator, async (req, res)=>{
     //Create data
     let size = await team_checklist.count()
     let data = await team_checklist.create({
-        checklist_ID: req.body.checklist_ID,
+        checklist_ID: uuidv4(),
         todolist_ID: req.body.todolist_ID,
         userlist: req.body.userlist,
         name: req.body.name,
@@ -18,7 +19,7 @@ router.post("/add", authenticator, async (req, res)=>{
         checklist_index: size,
         expire_datetime: req.body.expire_datetime,
         due_datetime: req.body.due_datetime,
-        checklist_check: req.body.checklist_check
+        checklist_check: req.body.checklist_check,
     }).catch((err)=>{
         console.log(err)
         res.sendStatus(400)

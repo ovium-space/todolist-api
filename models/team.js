@@ -1,3 +1,4 @@
+
 module.exports = (sequelize, DataTypes) =>{
     const team = sequelize.define('team', {
         team_ID:{
@@ -20,4 +21,5 @@ module.exports = (sequelize, DataTypes) =>{
         team.hasMany(models.team_todolist, {foreignKey:"team_ID"})
     }
     return team
+
 }

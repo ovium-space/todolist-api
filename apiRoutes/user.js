@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
-const authenticator = require('../authenticator')
+const authenticator = require("../authenticator")
+const { v4: uuidv4 } = require("uuid")
 const cipher = require("../cipher")
 
 router.use(express.json())
@@ -33,16 +34,16 @@ router.get("/:id", authenticator, async (req, res)=>{
     res.send(data)
 })
 
-router.post("/add", authenticator, async (req, res)=>{
+router.post("/add", async (req, res)=>{
     //Hashing password
     let hashedPassword = cipher.encrypt(req.body.password)
     let data = await user.create({
-        user_ID: req.body.user_ID,
+        user_ID: uuidv4(),
         firstname: req.body.firstname,
         lastname: req.body.lastname,
         email: req.body.email,
         username: req.body.username,
-        password: hashedPassword
+        password: req.body.password,
     }).catch((err)=>{
         console.log(err)
         return res.sendStatus(400)

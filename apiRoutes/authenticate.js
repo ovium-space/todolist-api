@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require("express")
 const router = express.Router()
 const jwt = require('jsonwebtoken')
 const cipher = require("../cipher")
@@ -6,7 +6,7 @@ const cipher = require("../cipher")
 router.use(express.json())
 
 //Model
-const { user } = require('../models')
+const { user } = require("../models")
 
 //Login
 router.post("/", async (req, res)=>{

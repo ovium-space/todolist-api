@@ -17,7 +17,7 @@ services:
             - db_data:/var/lib/mysql
         restart: always
         environment: 
-            MYSQL_ROOT_PASSWORD: 12345678
+            MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
         ports: 
             - 3306:3306
     phpmyadmin:

@@ -1,8 +1,10 @@
-require('dotenv').config()
+require("dotenv").config()
 //Modules
-const express = require('express')
-const jwt = require('jsonwebtoken')
-const authenticator = require('./authenticator')
+const express = require("express")
+const jwt = require("jsonwebtoken")
+const authenticator = require("./authenticator")
+const cron = require("node-cron")
+const mailer = require("./mailer")
 
 //Rounters
 const todoAPI = require("./apiRoutes/todolist")
@@ -15,7 +17,7 @@ const team_checklist = require("./apiRoutes/team_checklist")
 const imageUploader = require("./apiRoutes/imageUploader")
 
 //Database
-const db = require('./models')
+const db = require("./models")
 
 //Set PORT
 const port = process.env.PORT || 3000
@@ -35,25 +37,43 @@ api.use("/api/v1/team/checklist", team_checklist)
 api.use("/api/v1/", imageUploader)
 
 //Index
-api.get("/", authenticator, (req, res)=>{
-    res.sendStatus(200)
+api.get("/", authenticator, (req, res) => {
+  res.sendStatus(200)
 })
 
 //Debug only!
-api.get("/reset", async (req, res)=>{
-    db.sequelize.sync({force: true}).then(()=>{console.log("Database Sync!")}).catch(err=>console.log(err))
-    res.sendStatus(200)
+api.get("/reset", async (req, res) => {
+  db.sequelize
+    .sync({ force: true })
+    .then(() => {
+      console.log("Database Sync!")
+    })
+    .catch((err) => console.log(err))
+  res.sendStatus(200)
 })
 
 //Authenticate database
-db.sequelize.authenticate().then(()=>{
+db.sequelize
+  .authenticate()
+  .then(() => {
     console.log("Connected to database.")
-}).catch((err)=>{
+  })
+  .catch((err) => {
     console.log("Failed to connect to database: \n" + err)
-})
+  })
 
 //Let's API Listen on PORT
-api.listen(port, ()=>{
-    console.log(`Listen on port: ${port}`)
+api.listen(port, () => {
+  console.log(`Listen on port: ${port}`)
 })
 
+//schedule email
+cron.schedule(
+  "0 8 * * *",
+  () => {
+    mailer.checkTodolist()
+  },
+  {
+    timezone: "Asia/Bangkok",
+  }
+)

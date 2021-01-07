@@ -1,3 +1,4 @@
+
 module.exports = (sequelize, DataTypes)=>{
     const checklist = sequelize.define("checklist", {
         checklist_ID:{

@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
-const authenticator = require('../authenticator')
-const { Op } = require("sequelize");
+const authenticator = require("../authenticator")
+const { v4: uuidv4 } = require("uuid")
 
 router.use(express.json())
 
@@ -14,14 +14,14 @@ router.post("/add", authenticator, async (req, res)=>{
 
     //Create data from request
     let data = await checklist.create({
-        checklist_ID: req.body.checklist_ID,
-        todolist_ID: req.body.todolist_ID,
-        name: req.body.name,
-        state: req.body.state,
-        checklist_index: size,
-        expire_datetime: req.body.expire_datetime,
-        due_datetime: req.body.due_datetime,
-        checklist_check: req.body.checklist_check
+      checklist_ID: uuidv4(),
+      todolist_ID: req.body.todolist_ID,
+      name: req.body.name,
+      state: req.body.state,
+      checklist_index: size,
+      expire_datetime: req.body.expire_datetime,
+      due_datetime: req.body.due_datetime,
+      checklist_check: req.body.checklist_check,
     }).catch((err)=>{
         console.log(err)
         return res.sendStatus(400)

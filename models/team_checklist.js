@@ -1,3 +1,4 @@
+
 module.exports = (sequelize, DataTypes)=>{
     const team_checklist = sequelize.define("team_checklist", {
         checklist_ID:{
@@ -43,6 +44,6 @@ module.exports = (sequelize, DataTypes)=>{
         team_checklist.belongsToMany(models.user, {through:'Tchecklist_user', foreignKey:"checklist_ID"})
     }
 
-    return team_checklist
+  return team_checklist
 }
 

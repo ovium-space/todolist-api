@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
-const authenticator = require('../authenticator')
+const authenticator = require("../authenticator")
+const { v4: uuidv4 } = require("uuid")
 
 router.use(express.json())
 
@@ -29,9 +30,9 @@ router.get("/:id", authenticator, async (req, res) => {
 router.post("/add", authenticator, async (req, res) => {
     //Create data from request
     let data = await team.create({
-        team_ID: req.body.team_ID,
+        team_ID: uuidv4(),
         leader_ID: req.body.leader_ID,
-        name: req.body.name
+        name: req.body.name,
     }).catch(err=>{
         console.log(err)
         return res.sendStatus(400)
@@ -92,8 +93,8 @@ router.patch("/user/add/:id", authenticator, async (req, res) => {
 })
 
 router.patch("/user/delete/:id", authenticator, async (req, res) => {
-    let teamID = req.params.id
-    let userlist = req.body.userlist
+  let teamID = req.params.id
+  let userlist = req.body.userlist
 
     //Check if id is Integer or not
     if(isNaN(teamID)) return res.status(400).send("ID should be number.")
