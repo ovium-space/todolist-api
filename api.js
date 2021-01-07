@@ -6,7 +6,6 @@ const authenticator = require("./authenticator")
 const cron = require("node-cron")
 const mailer = require("./mailer")
 
-
 //Rounters
 const todoAPI = require("./apiRoutes/todolist")
 const checklistAPI = require("./apiRoutes/checklist")
@@ -38,14 +37,19 @@ api.use("/api/v1/team/checklist", team_checklist)
 api.use("/api/v1/", imageUploader)
 
 //Index
-api.get("/", authenticator, (req, res)=>{
-    res.sendStatus(200)
+api.get("/", authenticator, (req, res) => {
+  res.sendStatus(200)
 })
 
 //Debug only!
-api.get("/reset", async (req, res)=>{
-    db.sequelize.sync({force: true}).then(()=>{console.log("Database Sync!")}).catch(err=>console.log(err))
-    res.sendStatus(200)
+api.get("/reset", async (req, res) => {
+  db.sequelize
+    .sync({ force: true })
+    .then(() => {
+      console.log("Database Sync!")
+    })
+    .catch((err) => console.log(err))
+  res.sendStatus(200)
 })
 
 //Authenticate database
@@ -64,7 +68,12 @@ api.listen(port, () => {
 })
 
 //schedule email
-cron.schedule("0 8 * * *", () => {}, {
-  timezone: "Asia/Bangkok",
-})
-mailer.checkTodolist()
+cron.schedule(
+  "0 8 * * *",
+  () => {
+    mailer.checkTodolist()
+  },
+  {
+    timezone: "Asia/Bangkok",
+  }
+)
